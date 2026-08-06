@@ -103,12 +103,29 @@ def _run_ragas(settings: Settings, answers: list[dict[str, Any]]) -> dict[str, A
                 "contexts": [item["retrieved_contexts"] for item in answers],
             }
         )
+
+        class _RagasEmbeddings(MiniLMEmbeddings):
+            def __init__(self, model_name: str):
+                super().__init__(model_name)
+                self._sentence_model = self.model
+                self.model = model_name
+
+            def embed_documents(self, texts: list[str]) -> list[list[float]]:
+                embeddings = self._sentence_model.encode(texts, normalize_embeddings=True)
+                return embeddings.tolist()
+
+            def embed_query(self, text: str) -> list[float]:
+                embedding = self._sentence_model.encode([text], normalize_embeddings=True)
+                return embedding[0].tolist()
+
         result = evaluate(
             dataset,
             metrics=[answer_relevancy, context_precision, context_recall, faithfulness],
             llm=build_llm(settings=settings, temperature=0.0),
-            embeddings=MiniLMEmbeddings(settings.embedding_model),
+            embeddings=_RagasEmbeddings(settings.embedding_model),
         )
+        if hasattr(result, "to_pandas"):
+            return result.to_pandas().mean().to_dict()
         return dict(result)
     except Exception as exc:  # pragma: no cover
         return {"error": f"Ragas evaluation failed: {exc}"}
