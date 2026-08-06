@@ -20,6 +20,16 @@ def _parse_date(date_str: str, default_date: datetime) -> datetime:
     return default_date
 
 
+import re
+
+def _clean_text(raw: str) -> str:
+    if not raw:
+        return ""
+    # Strip HTML/XML tags e.g. <jats:p>, <b>, etc.
+    cleaned = re.sub(r"<[^>]+>", "", str(raw))
+    return normalize_whitespace(cleaned)
+
+
 def build_clean_dataframe(records: list[PaperRecord], run_date: datetime) -> pd.DataFrame:
     """Clean raw records into a pandas DataFrame ready for embedding and indexing."""
     if not records:
@@ -49,21 +59,21 @@ def build_clean_dataframe(records: list[PaperRecord], run_date: datetime) -> pd.
 
     for rec in records:
         paper_id = (rec.paper_id or "").strip()
-        title = normalize_whitespace(rec.title or "")
-        summary = normalize_whitespace(rec.summary or "")
+        title = _clean_text(rec.title or "")
+        summary = _clean_text(rec.summary or "")
 
         if not paper_id or not title:
             continue
 
         authors_list = rec.authors if isinstance(rec.authors, list) else []
-        authors_clean = [normalize_whitespace(a) for a in authors_list if a and normalize_whitespace(a)]
+        authors_clean = [_clean_text(a) for a in authors_list if a and _clean_text(a)]
         authors_joined = ", ".join(authors_clean) if authors_clean else "Unknown Author"
 
         categories_list = rec.categories if isinstance(rec.categories, list) else []
-        categories_clean = [normalize_whitespace(c) for c in categories_list if c and normalize_whitespace(c)]
+        categories_clean = [_clean_text(c) for c in categories_list if c and _clean_text(c)]
         categories_joined = ", ".join(categories_clean) if categories_clean else "General"
 
-        primary_category = normalize_whitespace(rec.primary_category or (categories_clean[0] if categories_clean else "General"))
+        primary_category = _clean_text(rec.primary_category or (categories_clean[0] if categories_clean else "General"))
 
         pub_dt = _parse_date(rec.published, run_date_naive)
         pub_str = pub_dt.strftime("%Y-%m-%d")
@@ -73,12 +83,8 @@ def build_clean_dataframe(records: list[PaperRecord], run_date: datetime) -> pd.
         age_days = max(0, (run_date_naive.date() - pub_dt.date()).days)
         summary_chars = len(summary)
 
-        text_for_embedding = (
-            f"Title: {title}\n"
-            f"Summary: {summary}\n"
-            f"Authors: {authors_joined}\n"
-            f"Categories: {categories_joined}"
-        )
+        # Standard format for semantic embedding
+        text_for_embedding = f"Title: {title} | Authors: {authors_joined} | Summary: {summary}"
 
         rows.append(
             {
@@ -105,8 +111,8 @@ def build_clean_dataframe(records: list[PaperRecord], run_date: datetime) -> pd.
     if df.empty:
         return df
 
-    # Filter invalid/short summary rows (< 5 words)
-    df = df[df["summary"].apply(lambda s: len(str(s).split()) >= 5)]
+    # Filter invalid/short summary rows (< 100 characters)
+    df = df[df["summary_chars"] >= 100]
 
     # Drop duplicates by paper_id and title
     df = df.drop_duplicates(subset=["paper_id"], keep="first")
@@ -115,4 +121,5 @@ def build_clean_dataframe(records: list[PaperRecord], run_date: datetime) -> pd.
     # Sort by published date descending
     df = df.sort_values(by="published", ascending=False).reset_index(drop=True)
     return df
+
 
