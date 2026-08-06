@@ -6,20 +6,20 @@
 
 | Thông tin         | Nội dung                  |
 | ------------------ | -------------------------- |
-| Khóa/Lớp         | [K3 hoặc K4]              |
-| Tên nhóm         | [Tên hoặc mã nhóm]     |
-| Repository         | [Đường dẫn repository] |
-| Ngày hoàn thành | [YYYY-MM-DD]               |
+| Khóa/Lớp         | [K3]              |
+| Tên nhóm         | [B2]     |
+| Repository         | [https://github.com/vdungx/B2_D305_K3_Data-Pipeline-Data-Observability.git] |
+| Ngày hoàn thành | [2026-08-06]               |
 
 ### Thành viên và phân công
 
 | STT | Họ và tên | MSSV | Vai trò chính | Module/deliverable sở hữu |
 | --: | --- | --- | --- | --- |
-| 1 | [Họ tên] | [MSSV] | [Vai trò] | [File, hàm hoặc artifact] |
-| 2 | [Họ tên] | [MSSV] | [Vai trò] | [File, hàm hoặc artifact] |
-| 3 | [Họ tên] | [MSSV] | [Vai trò] | [File, hàm hoặc artifact] |
-| 4 | [Nếu có] | [MSSV] | [Vai trò] | [File, hàm hoặc artifact] |
-| 5 | [Nếu có] | [MSSV] | [Vai trò] | [File, hàm hoặc artifact] |
+| 1 | Đàm Lê Minh Quân | 2A202601451 | Source Ingestion | `src/ingestion/crossref.py`, `data/raw/crossref_records.json` |
+| 2 | Trần Văn Dũng | 2A202601859 | Data Cleaning & Test Set | `src/ingestion/cleaning.py`, `src/evaluation/testset.py`, `data/clean/papers_clean.csv`, `data/eval/test_set.json` |
+| 3 | Lê Văn Đông | 2A202601851 | Observability & Reporting | `src/observability/quality.py`, `src/observability/reporting.py`, `data/quality/`, `data/reports/` |
+| 4 | Đào Đức Mạnh | 2A202601833 | Corruption & Repair | `src/ingestion/corruption.py`, `data/clean/papers_clean_corrupted.csv`, `data/results/corruption_log.json` |
+| 5 | Nguyễn Viết Huy | 2A202601081 | Integration & Comparison | `src/pipelines/phase1.py`, `src/pipelines/corruption_flow.py`, `script/` |
 
 ## 2. Tóm tắt kết quả
 
@@ -56,15 +56,13 @@ Crossref API
 
 ### Trách nhiệm của từng khối
 
-| Khối             | Input          | Xử lý chính             | Output/artifact          | Owner          |
-| ----------------- | -------------- | -------------------------- | ------------------------ | -------------- |
-| Ingestion         | [Nguồn/input] | [Fetch, retry, parse...]   | [Đường dẫn artifact] | [Thành viên] |
-| Cleaning          | [Input]        | [Các quy tắc chính]     | [Đường dẫn artifact] | [Thành viên] |
-| Embedding/index   | [Input]        | [Model/index config]       | [Đường dẫn artifact] | [Thành viên] |
-| Evaluation        | [Input]        | [Test set và metrics]     | [Đường dẫn artifact] | [Thành viên] |
-| Observability     | [Input]        | [Quality/freshness checks] | [Đường dẫn artifact] | [Thành viên] |
-| Corruption/repair | [Input]        | [Corruption và repair]    | [Đường dẫn artifact] | [Thành viên] |
-| Orchestration     | [Input]        | [Thứ tự chạy]           | [Reports/metrics]        | [Thành viên] |
+| Khối | Input | Xử lý chính | Output/artifact | Owner |
+| --- | --- | --- | --- | --- |
+| Ingestion | Crossref API / Settings | Fetch data với retry/backoff, parse sang `PaperRecord` | `data/raw/crossref_records.json` | Quân (1) |
+| Cleaning & Test set | `list[PaperRecord]` từ Quân (1) | Normalize text, calculate `age_days`, tạo `text_for_embedding`, tạo test set 4 loại Q&A | `data/clean/papers_clean.csv`, `data/eval/test_set.json` | Dũng (2) |
+| Observability | Clean/Corrupted DataFrame từ Dũng (2) & Mạnh (4) | Data Quality checks, Freshness monitoring, xuất báo cáo Markdown | `data/quality/freshness_report.json`, `data/reports/*.md` | Đông (3) |
+| Corruption & Repair | Clean DataFrame từ Dũng (2) & Raw records từ Quân (1) | Simulate 6 dạng corruption, log hỏng dữ liệu, repair khôi phục từ raw | `data/clean/papers_clean_corrupted.csv`, `data/results/corruption_log.json` | Mạnh (4) |
+| Orchestration | Modules từ TV 1, 2, 3, 4 | Điều phối Phase 1 Baseline & Corruption Flow, Index ChromaDB, E2E Evaluation | `data/results/baseline_metrics.json`, `data/results/repaired_metrics.json` | Huy (5) |
 
 ## 4. Cách tái hiện kết quả
 
