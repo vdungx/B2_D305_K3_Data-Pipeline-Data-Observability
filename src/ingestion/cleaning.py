@@ -20,14 +20,18 @@ def _parse_date(date_str: str, default_date: datetime) -> datetime:
     return default_date
 
 
+import html
 import re
+
 
 def _clean_text(raw: str) -> str:
     if not raw:
         return ""
-    # Strip HTML/XML tags e.g. <jats:p>, <b>, etc.
+    # Strip HTML/XML tags e.g. <jats:p>, <b>, etc. and unescape HTML entities (&amp;, &lt;)
     cleaned = re.sub(r"<[^>]+>", "", str(raw))
+    cleaned = html.unescape(cleaned)
     return normalize_whitespace(cleaned)
+
 
 
 def build_clean_dataframe(records: list[PaperRecord], run_date: datetime) -> pd.DataFrame:

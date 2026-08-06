@@ -3,8 +3,9 @@
 
 ---
 
-## 👤 Thành viên 1: Source Ingestion
+## 👤 Thành viên 1: Đàm Lê Minh Quân (Source Ingestion)
 **Phụ trách chính**: `src/ingestion/crossref.py`
+
 
 - [ ] **1. Tìm hiểu cấu trúc dữ liệu Crossref API**
   - Đọc tài liệu Crossref API (`https://api.crossref.org/works`).
@@ -35,7 +36,7 @@
 
 ---
 
-## 👤 Thành viên 2: Data Cleaning & Test Set
+## 👤 Thành viên 2: Trần Văn Dũng (Data Cleaning & Test Set)
 **Phụ trách chính**: `src/ingestion/cleaning.py`, `src/evaluation/testset.py`
 
 - [x] **1. Hoàn thành hàm `build_clean_dataframe(records: list[PaperRecord], run_date: datetime) -> pd.DataFrame` trong `cleaning.py`**
@@ -67,7 +68,7 @@
 
 ---
 
-## 👤 Thành viên 3: Observability & Reporting
+## 👤 Thành viên 3: Lê Văn Đông (Observability & Reporting)
 **Phụ trách chính**: `src/observability/quality.py`, `src/observability/reporting.py`
 
 - [ ] **1. Hoàn thành `src/observability/quality.py`**
@@ -101,7 +102,7 @@
 
 ---
 
-## 👤 Thành viên 4: Data Corruption & Repair
+## 👤 Thành viên 4: Đào Đức Mạnh (Data Corruption & Repair)
 **Phụ trách chính**: `src/ingestion/corruption.py`
 
 - [ ] **1. Hoàn thành hàm `corrupt_clean_dataframe(df: pd.DataFrame, output_log_path) -> pd.DataFrame`**
@@ -124,7 +125,7 @@
 
 ---
 
-## 👤 Thành viên 5: Integration & Pipeline Execution
+## 👤 Thành viên 5: Nguyễn Viết Huy (Integration & Pipeline Execution)
 **Phụ trách chính**: `src/pipelines/phase1.py`, `src/pipelines/corruption_flow.py`
 
 - [ ] **1. Hoàn thành `main()` trong `src/pipelines/phase1.py` (Baseline Pipeline)**

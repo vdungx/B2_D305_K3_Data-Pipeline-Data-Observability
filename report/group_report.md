@@ -70,13 +70,14 @@ Crossref API
 
 | Biến/cấu hình             | Giá trị sử dụng |
 | ---------------------------- | ------------------- |
-| `LLM_PROVIDER`             | [Giá trị]         |
-| `LLM_MODEL`                | [Giá trị]         |
-| Embedding model              | [Giá trị]         |
-| Số lượng Crossref records | [Giá trị]         |
-| Retrieval`top_k`           | [Giá trị]         |
-| Freshness threshold          | [Giá trị]         |
-| Random seed, nếu có        | [Giá trị]         |
+| `LLM_PROVIDER`             | `gemini` |
+| `LLM_MODEL`                | `gemini-2.5-flash` |
+| Embedding model              | `sentence-transformers/all-MiniLM-L6-v2` |
+| Số lượng Crossref records | 24 |
+| Retrieval`top_k`           | 4 |
+| Freshness threshold          | 180 ngày |
+| Random seed, nếu có        | 42 |
+
 
 Không dán nội dung API key hoặc file `.env` vào báo cáo.
 
@@ -133,46 +134,53 @@ python script/run_corruption_flow.py
 
 | Thuộc tính                | Giá trị                             |
 | --------------------------- | ------------------------------------- |
-| Source                      | [Crossref endpoint/dataset thực tế] |
-| Query/filter                | [Query hoặc filter]                  |
-| Thời điểm lấy dữ liệu | [Timestamp]                           |
-| Số record nhận được    | [Số lượng]                         |
-| Cơ chế retry/backoff      | [Mô tả ngắn]                       |
+| Source                      | Crossref REST API (`https://api.crossref.org/works`) |
+| Query/filter                | Query: `agentic retrieval augmented generation large language model`, Filter: `from-pub-date:2024-02-08,has-abstract:true` |
+| Thời điểm lấy dữ liệu | 2026-08-06 |
+| Số record nhận được    | 24 |
+| Cơ chế retry/backoff      | HTTP GET request với exponential backoff cho status codes 429 (Rate limit) & 503, max 3 retries |
 
 ### Raw và clean schema
 
 | Trường        | Kiểu dữ liệu | Bắt buộc?  | Ý nghĩa   | Xử lý khi thiếu/sai |
 | --------------- | --------------- | ------------ | ----------- | ---------------------- |
-| [Tên trường] | [Kiểu]         | [Có/Không] | [Ý nghĩa] | [Cách xử lý]        |
-| [Tên trường] | [Kiểu]         | [Có/Không] | [Ý nghĩa] | [Cách xử lý]        |
+| `paper_id` | String | Có | Mã định danh DOI bài báo | Drop record nếu rỗng |
+| `title` | String | Có | Tiêu đề bài báo | Bóc sạch XML/HTML tags, drop nếu rỗng |
+| `summary` | String | Có | Tóm tắt/Abstract bài báo | Bóc sạch XML/HTML tags, lọc bỏ nếu < 100 ký tự |
+| `authors` | List[String] | Không | Danh sách tác giả | Gộp thành `authors_joined`, mặc định "Unknown Author" |
+| `categories` | List[String] | Không | Chủ đề / danh mục | Gộp thành `categories_joined`, mặc định "General" |
+| `published` | String | Có | Ngày xuất bản YYYY-MM-DD | Parse ngày chuẩn ISO, dùng run_date nếu thiếu |
+| `age_days` | Integer | Có | Khoảng cách tuổi dữ liệu (ngày) | `max(0, (run_date - published).days)` |
+| `text_for_embedding` | String | Có | Văn bản hợp nhất cho Vector Embeddings | `Title: [title] | Authors: [authors] | Summary: [summary]` |
 
 ### Quy tắc cleaning
 
 | Quy tắc                                 | Quality dimension liên quan | Số record bị tác động | Cách xác minh      |
 | ---------------------------------------- | ---------------------------- | -------------------------: | -------------------- |
-| [Ví dụ: loại record không có title] | [Completeness/Validity/...]  |              [Số lượng] | [Artifact/kiểm tra] |
-| [Quy tắc thực tế]                     | [Dimension]                  |              [Số lượng] | [Artifact/kiểm tra] |
+| Lọc bỏ bản ghi thiếu title/DOI hoặc summary < 100 ký tự | Completeness / Validity | 0 | Kiểm tra `papers_clean.csv` |
+| Bóc sạch các thẻ HTML/XML (`<jats:p>`, `<b>`) | Validity / Consistency | 24 | Regex clean check trong `cleaning.py` |
+| Loại bỏ các bản ghi trùng lặp theo `paper_id` và `title` | Uniqueness | 0 | `df.drop_duplicates()` |
 
 Giải thích cách nhóm tạo `text_for_embedding`, document ID và `age_days`:
 
-[Mô tả tại đây.]
+Dữ liệu thô từ Crossref API được gọt bỏ các thẻ HTML/XML rác trong tiêu đề và tóm tắt. Nhóm sử dụng `paper_id` (DOI) làm document ID duy nhất trong vector database. Cột `text_for_embedding` được tổng hợp chuẩn hóa theo định dạng `Title: [title] | Authors: [authors_joined] | Summary: [summary]` giúp MiniLM embedding capture đầy đủ cả ngữ nghĩa tiêu đề, tác giả và nội dung tóm tắt. Cột `age_days` được tính từ ngày xuất bản đến `run_date` nhằm giám sát chỉ số Data Freshness.
 
 ## 6. Evaluation setup
 
 | Thành phần                             | Cấu hình thực tế          |
 | ---------------------------------------- | ----------------------------- |
-| Số câu hỏi                            | [Số lượng]                 |
-| Các`question_type`                    | [Danh sách]                  |
-| Ground-truth document ID                 | [Cách tạo/đối chiếu]     |
-| Embedding model                          | [Tên model]                  |
-| Vector store/collection                  | [Tên/config]                 |
-| Retrieval`top_k`                       | [Giá trị]                   |
-| LLM provider/model                       | [Giá trị]                   |
-| Test set dùng chung cho ba trạng thái | [Đường dẫn hoặc ID/hash] |
+| Số câu hỏi                            | 40 |
+| Các`question_type`                    | `summary`, `authors`, `date`, `categories` |
+| Ground-truth document ID                 | Trích xuất trực tiếp từ `paper_id` tương ứng của bản ghi sạch |
+| Embedding model                          | `sentence-transformers/all-MiniLM-L6-v2` |
+| Vector store/collection                  | ChromaDB / Collection `papers-baseline` |
+| Retrieval`top_k`                       | 4 |
+| LLM provider/model                       | Gemini / `gemini-2.5-flash` |
+| Test set dùng chung cho ba trạng thái | `data/eval/test_set.json` (Frozen Evaluation Set) |
 
 Giải thích vì sao test set được giữ nguyên khi đánh giá baseline, corrupted và repaired:
 
-[Giải thích tại đây.]
+Bộ câu hỏi kiểm thử được đóng băng cố định (Frozen Evaluation Set) nhằm tạo ra một thước đo cố định (Baseline Benchmark) duy nhất. Điều này bảo đảm rằng mọi sự sụt giảm hay phục hồi của các chỉ số `retrieval_hit_rate`, `token_f1`, và `judge_accuracy` qua 3 pha (Baseline, Corrupted, Repaired) đều xuất phát từ chất lượng dữ liệu thay vì do thay đổi bộ câu hỏi.
 
 ## 7. Kết quả baseline
 
