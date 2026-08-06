@@ -17,8 +17,8 @@ Dưới đây là kết quả đánh giá hệ thống RAG sử dụng dữ li�
 
 * **🎯 Tỉ lệ tìm kiếm trúng (Retrieval Hit Rate):** `100.00%`
 * **✍️ Điểm tương đồng từ vựng (Mean Token F1):** `100.00%`
-* **🤖 Độ chính xác đánh giá (Judge Accuracy):** `100.00%`
-* **⭐ Điểm trung bình đánh giá (Mean Judge Score):** `5.00 / 5.0`
+* **🤖 Độ chính xác đánh giá (Judge Accuracy):** `90.00%`
+* **⭐ Điểm trung bình đánh giá (Mean Judge Score):** `4.70 / 5.0`
 
 ### 🔍 Chi tiết đánh giá bổ sung (Ragas Metrics)
 *Set RUN_RAGAS=1 to enable the slower Ragas pass.*
@@ -27,7 +27,7 @@ Dưới đây là kết quả đánh giá hệ thống RAG sử dụng dữ li�
 Tổng hợp trạng thái kiểm tra chất lượng dữ liệu của DataFrame đã được làm sạch:
 
 * **Trạng thái chung:** 🟢 **PASSED (Tất cả bài kiểm tra)**
-* **Thời gian kiểm định:** `2026-08-06T10:52:12.762498`
+* **Thời gian kiểm định:** `2026-08-06T11:16:41.708141`
 * **Tổng số bản ghi kiểm định:** `24`
 
 | Tên kiểm tra (Check Name) | Trạng thái (Status) | Kết quả quan sát (Observed) | Thông báo (Message) |

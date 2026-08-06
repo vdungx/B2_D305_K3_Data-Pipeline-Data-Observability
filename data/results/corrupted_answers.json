@@ -23,9 +23,9 @@
     "retrieval_hit": false,
     "token_f1": 0.13953488372093023,
     "judge": {
-      "score": 1,
+      "score": 2,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Short reasoning: The model answer is factually incorrect. It states that the paper is about generating \"scientific literature review generation,\" whereas the title and reference answer clearly state it is about \"Oil and Gas Safety Report Generation\" and accident analysi"
+      "reasoning": "- score: 2\n- correct: false\n- reasoning: The model answer incorrectly identifies the paper's purpose as \"scientific literature review generation\" instead of \"automated accident analysis and generating safety reports\" in high-risk industrial settings, which is the actual focus of the 'SafeRAG' paper."
     }
   },
   {
@@ -54,7 +54,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Reasoning: The model answer provides completely incorrect authors (\"Dr. Sumalatha P, Manoj Kumar\") compared to the reference answer (\"Qianwen Cao, Chiyu Zhang, Junxiong Ning, Gongru Li\")."
+      "reasoning": "- score: 1\n- correct: false\n- reasoning: The model answer lists different authors than the reference answer."
     }
   },
   {
@@ -83,7 +83,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Reasoning: The model answer (2026-04-07) does not match the reference publication date (2026-08-01)."
+      "reasoning": "- score: 1\n- correct: false\n- short_reasoning: The model provided a different publication date (2026-04-07) than the reference answer (2026-08-01)."
     }
   },
   {
@@ -110,9 +110,9 @@
     "retrieval_hit": false,
     "token_f1": 0.0,
     "judge": {
-      "score": 1,
-      "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Reasoning: The model answer (\"Computer Science\") is incorrect. The reference answer indicates the paper belongs to the \"SPE Journal\" category (Society of Petroleum Engineers)."
+      "score": 5,
+      "correct": true,
+      "reasoning": "- score: 5\n- correct: true\n- short reasoning: The question asks for categories the paper covers. The reference answer provides a journal name (publication venue), not a category. The model answer provides \"Computer Science,\" which is a relevant category given the paper's title mentions \"Large-Langua"
     }
   },
   {
@@ -141,7 +141,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Short reasoning: The model answer is completely blank and fails to provide any information regarding the paper's findings."
+      "reasoning": "Score: 1\nCorrect: false\nReasoning: The model answer is empty and provides no information, therefore it cannot be considered correct or a summary of the paper."
     }
   },
   {
@@ -170,7 +170,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Reasoning: The model answer provides completely incorrect author names compared to the reference answer (Wei Tian, Yuhao Zhou)."
+      "reasoning": "- score: 1\n- correct: false\n- short reasoning: The model provided a list of authors, but they are not the correct authors for the specified paper."
     }
   },
   {
@@ -197,9 +197,9 @@
     "retrieval_hit": false,
     "token_f1": 0.0,
     "judge": {
-      "score": 4,
+      "score": 2,
       "correct": false,
-      "reasoning": "- Score: 4/5\n- Correct: false\n- Short reasoning: The model's answer (2026-07-01) is very close to the reference answer (2026-08-01), both pointing to the same year and general timeframe, but it is off by one month, making it materially incorrect for an exact date query."
+      "reasoning": "- score: 2\n- correct: false\n- short reasoning: The model answer is incorrect, differing from the reference answer by one month."
     }
   },
   {
@@ -228,7 +228,7 @@
     "judge": {
       "score": 3,
       "correct": true,
-      "reasoning": "- Score: 3\n- Correct: true\n- Short reasoning: The reference answer lists \"Expert Systems\", which is a sub-field within Computer Science. The model's answer, \"Computer Science\", is broader but still correct, as the paper belongs to the broader field of Computer Science (specifically AI/ML)."
+      "reasoning": "- score: 3/5\n- correct: true\n- reasoning: The model answer is technically correct as Computer Science is the overarching field for the paper. However, it is too broad and lacks the specificity implied by the question asking for \"categories\" of the paper's focus. The reference answer provides a more "
     }
   },
   {
@@ -257,7 +257,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "**Score:** 1  \n**Correct:** false  \n\n**Reasoning:** The model answer fails to mention the main topic of the paper (jawbone lesions and the JADE-Plus framework) and instead provides generic background context about Large Language Models and hallucinations."
+      "reasoning": "- score: 1\n- correct: false\n- short reasoning: The model answer discusses general limitations of LLMs, which is not a summary or main finding of the specific paper about diagnostic support for jawbone lesions. It fails to address the paper's specific context or contribution."
     }
   },
   {
@@ -286,7 +286,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Reasoning: The model answer (\"Eason Ni\") is completely incorrect. The reference answer lists the actual authors of the paper."
+      "reasoning": "- score: 1\n- correct: false\n- short_reasoning: The model answer provides an author (Eason Ni) who is not listed in the reference answer. The reference answer lists five different authors."
     }
   },
   {
@@ -315,7 +315,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Reasoning: The model answer (2026-03-15) does not match the reference answer (2026-07-13)."
+      "reasoning": "- score: 1\n- correct: false\n- short_reasoning: The model provided a different publication date (month and day) than the reference answer."
     }
   },
   {
@@ -344,7 +344,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Reasoning: The model answered \"Scholarly Review Journal,\" which is a broad publication type rather than the specific category/journal (\"Journal of Imaging Informatics in Medicine\") provided in the reference answer."
+      "reasoning": "score: 1\ncorrect: false\nreasoning: The model answer provides a general type of journal (\"Scholarly Review Journal\"), which is different from the specific journal name provided in the reference answer (\"Journal of Imaging Informatics in Medicine\"). Neither answer directly addresses the question about"
     }
   },
   {
@@ -373,7 +373,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Short reasoning: The model answer is completely empty, whereas the reference answer provides a summary of the paper's focus."
+      "reasoning": "Score: 1\nCorrect: false\nReasoning: The model answer is empty and provides no information, therefore it does not answer the question."
     }
   },
   {
@@ -402,7 +402,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Reasoning: The model's answer completely fails to identify the correct authors of the paper. The reference lists Novanto Yudistira and Yanuar Putra Kharisma Adhiyasa, whereas the model provides an entirely different and incorrect set of names."
+      "reasoning": "- score: 1\n- correct: false\n- short_reasoning: The model provided a list of authors, but none of them are correct according to the reference answer."
     }
   },
   {
@@ -431,7 +431,7 @@
     "judge": {
       "score": 3,
       "correct": false,
-      "reasoning": "- Score: 3/5\n- Correct: false\n- Short reasoning: The model's answer (2026-07-01) is close to the reference answer (2026-07-10) in the same month and year, but the exact publication date is incorrect."
+      "reasoning": "- score: 3\n- correct: false\n- short reasoning: The model provided the correct year and month but an incorrect day (01 instead of 10)."
     }
   },
   {
@@ -460,7 +460,7 @@
     "judge": {
       "score": 5,
       "correct": true,
-      "reasoning": "- Score: 5\n- Correct: true\n- Reasoning: The model answer correctly identifies the category (\"Computer Science\") as stated in the reference answer."
+      "reasoning": "- score: 5\n- correct: true\n- short_reasoning: The model answer is identical to the reference answer and correctly identifies the category."
     }
   },
   {
@@ -489,7 +489,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Short reasoning: The model's answer discusses the general limitations of LLMs (hallucinations, parametric memory), which is a common background premise, but it completely fails to mention or summarize the actual findings, focus, or conclusions of the specified paper reg"
+      "reasoning": "Score: 1\nCorrect: false\nReasoning: The model answer discusses the performance and limitations of LLMs in biomedical question-answering, while the reference answer focuses on the rapid adoption of LLMs by medical students for learning. The content of the model answer is entirely different from the re"
     }
   },
   {
@@ -518,7 +518,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Reasoning: The model answer (Eason Ni) is completely incorrect. The reference answer lists the actual authors of the paper (Rohin Athavale, Alexander Cresswell, Alice Huffman)."
+      "reasoning": "- score: 1\n- correct: false\n- short reasoning: The model provided an incorrect author. The correct authors are Rohin Athavale, Alexander Cresswell, and Alice Huffman."
     }
   },
   {
@@ -547,7 +547,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Reasoning: The model provided the date \"2026-03-15\", which does not match the reference answer date of \"2026-07-06\"."
+      "reasoning": "- score: 1\n- correct: false\n- short reasoning: The model provided an incorrect publication date. The correct date is 2026-07-06, not 2026-03-15."
     }
   },
   {
@@ -576,7 +576,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Short reasoning: The model answer (\"Scholarly Review Journal\") is incorrect. The reference answer and standard academic categorization (such as arXiv categories) for this computer science/AI education paper is \"Computer Science\" (or Information Science / Artificial Inte"
+      "reasoning": "- score: 1\n- correct: false\n- short_reasoning: The model answer describes a type of publication ('Scholarly Review Journal') rather than a subject category or discipline that the paper covers. The reference answer correctly identifies a relevant subject category ('Computer Science')."
     }
   },
   {
@@ -605,7 +605,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Short reasoning: The model answer is completely blank (empty), whereas the reference answer provides a summary of the context/motivation of the paper."
+      "reasoning": "- score: 1\n- correct: false\n- short reasoning: The model answer is empty and provides no information."
     }
   },
   {
@@ -634,7 +634,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Reasoning: The model answer provides completely incorrect author names (Ben J. Weber, Clara M. Hofmann, Amara N. Okoye) compared to the reference answer (Nawari O. Nawari, Oluwatoyin O. Lawal)."
+      "reasoning": "- score: 1\n- correct: false\n- short_reasoning: The model provided completely different authors than the reference answer."
     }
   },
   {
@@ -663,7 +663,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Short reasoning: The model answer provides the date June 30, 2026, while the reference answer is July 2, 2026. The dates do not match."
+      "reasoning": "- score: 1\n- correct: false\n- short_reasoning: The model provided a different date (2026-06-30) than the reference answer (2026-07-02)."
     }
   },
   {
@@ -692,7 +692,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Reasoning: The model answer (\"Journal of AI Analytics and Applications\") is a publication/journal name, whereas the question asks for the categories covered by the paper (such as \"Buildings\" as correctly identified in the reference answer)."
+      "reasoning": "- score: 1\n- correct: false\n- short reasoning: The model answer provides the name of a journal, not the categories or subject areas that the paper covers. The question asks for categories, and the reference answer correctly identifies \"Buildings\" as a relevant category based on the paper title."
     }
   },
   {
@@ -721,7 +721,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- Score: 1\n- Correct: false\n- Short reasoning: The model answer is completely empty and therefore fails to provide the main finding or summary of the paper."
+      "reasoning": "- score: 1\n- correct: false\n- reasoning: The model answer is empty and provides no information. It does not match the reference answer. (Note: The reference answer itself appears to be irrelevant to the question asked.)"
     }
   },
   {
@@ -750,7 +750,7 @@
     "judge": {
       "score": 5,
       "correct": true,
-      "reasoning": "- Score: 5\n- Correct: true\n- Reasoning: The model answer matches the reference answer completely, listing all the correct authors of the specified paper."
+      "reasoning": "- score: 5\n- correct: true\n- reasoning: The model answer is identical to the reference answer."
     }
   },
   {
@@ -779,7 +779,7 @@
     "judge": {
       "score": 5,
       "correct": true,
-      "reasoning": "- Score: 5\n- Correct: true\n- Reasoning: The model answer correctly identifies the publication date as 2026-07-01, matching the reference answer."
+      "reasoning": "- score: 5\n- correct: true\n- short_reasoning: The model answer is identical to the reference answer."
     }
   },
   {
@@ -808,7 +808,7 @@
     "judge": {
       "score": 5,
       "correct": true,
-      "reasoning": "- Score: 5\n- Correct: true\n- Reasoning: The model answer (\"Computer Science\") correctly identifies the category covered by the paper, matching the reference answer completely."
+      "reasoning": "- score: 5\n- correct: true\n- reasoning: The model answer is identical to the reference answer and correctly identifies the category."
     }
   },
   {
@@ -835,7 +835,7 @@
     "judge": {
       "score": 1,
       "correct": false,
-      "reasoning": "- **Score:** 1\n- **correct:** false\n- **Short reasoning:** The model answer is completely empty, so it fails to provide any evaluation or summary of the paper."
+      "reasoning": "- score: 1\n- correct: false\n- short reasoning: The model answer is empty and provides no information."
     }
   },
   {
@@ -862,7 +862,7 @@
     "judge": {
       "score": 5,
       "correct": true,
-      "reasoning": "- Score: 5\n- Correct: true\n- Reasoning: The model answer perfectly matches the reference answer and correctly identifies the authors of the paper."
+      "reasoning": "- score: 5\n- correct: true\n- short reasoning: The model answer is identical to the reference answer."
     }
   },
   {
@@ -889,7 +889,7 @@
     "judge": {
       "score": 5,
       "correct": true,
-      "reasoning": "- Score: 5\n- Correct: true\n- Reasoning: The model answer matches the reference answer exactly, providing the correct publication date of the paper."
+      "reasoning": "- score: 5\n- correct: true\n- short reasoning: The model answer perfectly matches the reference answer."
     }
   },
   {
@@ -914,9 +914,9 @@
     "retrieval_hit": true,
     "token_f1": 1.0,
     "judge": {
-      "score": 5,
-      "correct": true,
-      "reasoning": "- score: 5\n- correct: true\n- reasoning: The model correctly identified the journal/category as 'Journal of AI Analytics and Applications', which matches the reference answer."
+      "score": 1,
+      "correct": false,
+      "reasoning": "- score: 1\n- correct: false\n- short reasoning: The question asks for the categories covered by the paper, but both the reference and model answers provide the journal name where the paper was published. Therefore, the model answer is materially incorrect as it does not answer the question asked."
     }
   },
   {
@@ -945,7 +945,7 @@
     "judge": {
       "score": 5,
       "correct": true,
-      "reasoning": "- score: 5\n- correct: true\n- reasoning: The model answer is an exact match to the reference answer, accurately reflecting the main finding/summary of the paper."
+      "reasoning": "- score: 5\n- correct: true\n- reasoning: The model answer is identical to the reference answer."
     }
   },
   {
@@ -974,7 +974,7 @@
     "judge": {
       "score": 5,
       "correct": true,
-      "reasoning": "- Score: 5\n- Correct: true\n- Reasoning: The model answer correctly identifies the authors of the specified paper as '\u0418.\u0412. \u0415\u0440\u043c\u0430\u043a\u043e\u0432, \u0412.\u0412. \u0424\u0438\u043b\u0430\u0442\u043e\u0432', matching the reference answer completely."
+      "reasoning": "- score: 5\n- correct: true\n- short reasoning: The model answer is identical to the reference answer."
     }
   },
   {
@@ -1003,7 +1003,7 @@
     "judge": {
       "score": 5,
       "correct": true,
-      "reasoning": "- Score: 5\n- Correct: true\n- Reasoning: The model answer matches the reference answer exactly (2026-06-15)."
+      "reasoning": "- score: 5\n- correct: true\n- short reasoning: The model answer is identical to the reference answer."
     }
   },
   {
@@ -1032,7 +1032,7 @@
     "judge": {
       "score": 5,
       "correct": true,
-      "reasoning": "- Score: 5\n- Correct: true\n- Reasoning: The model answer matches the reference answer exactly, correctly identifying the category covered by the paper."
+      "reasoning": "- score: 5\n- correct: true\n- short_reasoning: The model answer is an exact match to the reference answer."
     }
   },
   {
@@ -1061,7 +1061,7 @@
     "judge": {
       "score": 5,
       "correct": true,
-      "reasoning": "Score: 5  \nCorrect: true  \n\nReasoning: The model answer exactly reproduces the reference answer, providing the same main finding/summary of the paper."
+      "reasoning": "- score: 5\n- correct: true\n- short reasoning: The model answer is an exact match to the reference answer, which is the abstract of the paper and perfectly summarizes its main finding."
     }
   },
   {
@@ -1090,7 +1090,7 @@
     "judge": {
       "score": 5,
       "correct": true,
-      "reasoning": "- Score: 5\n- Correct: true\n- Reasoning: The model answer accurately identifies the authors of the specified paper, matching the reference answer completely."
+      "reasoning": "- score: 5\n- correct: true\n- short reasoning: The model answer perfectly matches the reference answer."
     }
   },
   {
@@ -1119,7 +1119,7 @@
     "judge": {
       "score": 5,
       "correct": true,
-      "reasoning": "- Score: 5\n- Correct: true\n- Reasoning: The model answer matches the reference answer exactly."
+      "reasoning": "- score: 5\n- correct: true\n- short reasoning: The model answer is identical to the reference answer."
     }
   },
   {
@@ -1148,7 +1148,7 @@
     "judge": {
       "score": 5,
       "correct": true,
-      "reasoning": "- Score: 5\n- Correct: true\n- Reasoning: The model answer accurately identifies the category (\"Computer Science\") as provided in the reference answer."
+      "reasoning": "- score: 5\n- correct: true\n- short_reasoning: The model answer perfectly matches the reference answer."
     }
   }
 ]

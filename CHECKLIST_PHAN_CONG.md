@@ -7,31 +7,31 @@
 **Phụ trách chính**: `src/ingestion/crossref.py`
 
 
-- [ ] **1. Tìm hiểu cấu trúc dữ liệu Crossref API**
+- [x] **1. Tìm hiểu cấu trúc dữ liệu Crossref API**
   - Đọc tài liệu Crossref API (`https://api.crossref.org/works`).
   - Nắm rõ các trường: `DOI`, `title`, `abstract`, `author`, `subject`, `published-print`, `URL`, `publisher`.
 
-- [ ] **2. Hoàn thành hàm `parse_crossref_payload(payload: dict) -> list[PaperRecord]`**
-  - [ ] Duyệt qua danh sách `payload["message"]["items"]`.
-  - [ ] Trích xuất `paper_id` (DOI) và `title`. Bỏ qua bản ghi nếu thiếu một trong hai.
-  - [ ] Làm sạch chuỗi abstract: Xóa các thẻ HTML/XML như `<jats:p>`, `</jats:p>` và chuẩn hóa khoảng trắng.
-  - [ ] Trích xuất danh sách `authors` (`given` + `family` name).
-  - [ ] Trích xuất `categories` (từ `subject` hoặc `container-title`) và xác định `primary_category`.
-  - [ ] Parse ngày xuất bản `published` về định dạng ISO `YYYY-MM-DD`.
-  - [ ] Lấy `abs_url`, `pdf_url` (nếu có link PDF) và `comment` (publisher).
-  - [ ] Trả về danh sách đối tượng `PaperRecord`.
+- [x] **2. Hoàn thành hàm `parse_crossref_payload(payload: dict) -> list[PaperRecord]`**
+  - [x] Duyệt qua danh sách `payload["message"]["items"]`.
+  - [x] Trích xuất `paper_id` (DOI) và `title`. Bỏ qua bản ghi nếu thiếu một trong hai.
+  - [x] Làm sạch chuỗi abstract: Xóa các thẻ HTML/XML như `<jats:p>`, `</jats:p>` và chuẩn hóa khoảng trắng.
+  - [x] Trích xuất danh sách `authors` (`given` + `family` name).
+  - [x] Trích xuất `categories` (từ `subject` hoặc `container-title`) và xác định `primary_category`.
+  - [x] Parse ngày xuất bản `published` về định dạng ISO `YYYY-MM-DD`.
+  - [x] Lấy `abs_url`, `pdf_url` (nếu có link PDF) và `comment` (publisher).
+  - [x] Trả về danh sách đối tượng `PaperRecord`.
 
-- [ ] **3. Hoàn thành hàm `fetch_source_records(settings: Settings) -> list[PaperRecord]`**
-  - [ ] Khởi tạo tham số query từ `settings.source_query`, `settings.source_filter`, `settings.max_results`.
-  - [ ] Gửi request HTTP GET kèm User-Agent hợp lệ.
-  - [ ] Cài đặt retry với exponential backoff khi gặp lỗi HTTP `429` (Rate limit) hoặc `503`.
-  - [ ] Lưu payload thô vào `settings.paths.raw_api_response` (`data/raw/crossref_response.json`).
-  - [ ] Gọi `parse_crossref_payload` và lưu danh sách records vào `settings.paths.raw_records_json` (`data/raw/crossref_records.json`).
+- [x] **3. Hoàn thành hàm `fetch_source_records(settings: Settings) -> list[PaperRecord]`**
+  - [x] Khởi tạo tham số query từ `settings.source_query`, `settings.source_filter`, `settings.max_results`.
+  - [x] Gửi request HTTP GET kèm User-Agent hợp lệ.
+  - [x] Cài đặt retry với exponential backoff khi gặp lỗi HTTP `429` (Rate limit) hoặc `503`.
+  - [x] Lưu payload thô vào `settings.paths.raw_api_response` (`data/raw/crossref_response.json`).
+  - [x] Gọi `parse_crossref_payload` và lưu danh sách records vào `settings.paths.raw_records_json` (`data/raw/crossref_records.json`).
 
-- [ ] **4. Hoàn thành hàm `load_raw_records(path: Path) -> list[PaperRecord]`**
-  - [ ] Đọc file JSON snapshot và map các dict thành danh sách `PaperRecord`.
+- [x] **4. Hoàn thành hàm `load_raw_records(path: Path) -> list[PaperRecord]`**
+  - [x] Đọc file JSON snapshot và map các dict thành danh sách `PaperRecord`.
 
-- [ ] **5. Kiểm thử thành phần (Verification)**
+- [x] **5. Kiểm thử thành phần (Verification)**
   - Chạy thử nghiệm hàm ingestion và kiểm tra 2 file sinh ra trong `data/raw/`.
 
 ---
@@ -105,52 +105,53 @@
 ## 👤 Thành viên 4: Đào Đức Mạnh (Data Corruption & Repair)
 **Phụ trách chính**: `src/ingestion/corruption.py`
 
-- [ ] **1. Hoàn thành hàm `corrupt_clean_dataframe(df: pd.DataFrame, output_log_path) -> pd.DataFrame`**
-  - [ ] Implement **Lỗi 1 (Drop Latest Records)**: Xóa $20-30\%$ số bài báo xuất bản gần nhất để mô phỏng mất mát dữ liệu mới.
-  - [ ] Implement **Lỗi 2 (Blank Summary)**: Đặt rỗng summary cho $15\%$ số dòng.
-  - [ ] Implement **Lỗi 3 (Text Noise Injection)**: Thêm từ vô nghĩa/nhiễu ký tự vào summary.
-  - [ ] Implement **Lỗi 4 (Title Truncation)**: Cắt ngắn tiêu đề bài báo xuống còn 5-10 ký tự.
-  - [ ] Implement **Lỗi 5 (Stale Published Date)**: Sửa ngày xuất bản thành năm 2000 để làm mất độ tươi.
-  - [ ] Implement **Lỗi 6 (Add Duplicate Rows)**: Nhân đôi một số dòng dữ liệu.
-  - [ ] Cập nhật lại cột `text_for_embedding` tương ứng với các biến đổi lỗi trên.
-  - [ ] Ghi chi tiết các loại lỗi và số bản ghi bị tác động vào file log `data/results/corruption_log.json`.
-  - [ ] Lưu DataFrame bị lỗi vào `data/clean/papers_clean_corrupted.csv` và `.json`.
+- [x] **1. Hoàn thành hàm `corrupt_clean_dataframe(df: pd.DataFrame, output_log_path) -> pd.DataFrame`**
+  - [x] Implement **Lỗi 1 (Drop Latest Records)**: Xóa $20-30\%$ số bài báo xuất bản gần nhất để mô phỏng mất mát dữ liệu mới.
+  - [x] Implement **Lỗi 2 (Blank Summary)**: Đặt rỗng summary cho $15\%$ số dòng.
+  - [x] Implement **Lỗi 3 (Text Noise Injection)**: Thêm từ vô nghĩa/nhiễu ký tự vào summary.
+  - [x] Implement **Lỗi 4 (Title Truncation)**: Cắt ngắn tiêu đề bài báo xuống còn 5-10 ký tự.
+  - [x] Implement **Lỗi 5 (Stale Published Date)**: Sửa ngày xuất bản thành năm 2000 để làm mất độ tươi.
+  - [x] Implement **Lỗi 6 (Add Duplicate Rows)**: Nhân đôi một số dòng dữ liệu.
+  - [x] Cập nhật lại cột `text_for_embedding` tương ứng với các biến đổi lỗi trên.
+  - [x] Ghi chi tiết các loại lỗi và số bản ghi bị tác động vào file log `data/results/corruption_log.json`.
+  - [x] Lưu DataFrame bị lỗi vào `data/clean/papers_clean_corrupted.csv` và `.json`.
 
-- [ ] **2. Xây dựng logic Repair (Phục hồi dữ liệu)**
-  - Quy định luồng Repair: Đọc lại file bản ghi gốc `data/raw/crossref_records.json`, chạy lại pipeline clean từ Thành viên 2 để khôi phục dữ liệu sạch hoàn chỉnh.
-  - Xuất DataFrame đã sửa lỗi vào `data/clean/papers_clean_repaired.csv` và `.json`.
+- [x] **2. Xây dựng logic Repair (Phục hồi dữ liệu)**
+  - [x] Quy định luồng Repair: Đọc lại file bản ghi gốc `data/raw/crossref_records.json`, chạy lại pipeline clean từ Thành viên 2 để khôi phục dữ liệu sạch hoàn chỉnh.
+  - [x] Xuất DataFrame đã sửa lỗi vào `data/clean/papers_clean_repaired.csv` và `.json`.
 
-- [ ] **3. Kiểm thử thành phần (Verification)**
-  - Kiểm tra file log `corruption_log.json` ghi nhận chính xác các kịch bản hỏng dữ liệu.
+- [x] **3. Kiểm thử thành phần (Verification)**
+  - [x] Kiểm tra file log `corruption_log.json` ghi nhận chính xác các kịch bản hỏng dữ liệu.
 
 ---
 
 ## 👤 Thành viên 5: Nguyễn Viết Huy (Integration & Pipeline Execution)
 **Phụ trách chính**: `src/pipelines/phase1.py`, `src/pipelines/corruption_flow.py`
 
-- [ ] **1. Hoàn thành `main()` trong `src/pipelines/phase1.py` (Baseline Pipeline)**
-  - [ ] Bước 1: Load cấu hình `load_settings()`.
-  - [ ] Bước 2: Gọi `fetch_source_records` hoặc `load_raw_records` (từ Thành viên 1).
-  - [ ] Bước 3: Gọi `build_clean_dataframe` và lưu dữ liệu sạch (từ Thành viên 2).
-  - [ ] Bước 4: Tạo Vector Index trong ChromaDB với collection `papers-baseline` (dùng `src/retrieval/index.py`).
-  - [ ] Bước 5: Tạo hoặc đọc bộ kiểm thử `build_test_set` (từ Thành viên 2).
-  - [ ] Bước 6: Chạy đánh giá RAG agent với `evaluate_pipeline(...)` và lưu `baseline_metrics.json`.
-  - [ ] Bước 7: Thực hiện Data Quality checks và Freshness report (từ Thành viên 3).
-  - [ ] Bước 8: Tạo báo cáo Markdown `phase1_report.md` (từ Thành viên 3).
+- [x] **1. Hoàn thành `main()` trong `src/pipelines/phase1.py` (Baseline Pipeline)**
+  - [x] Bước 1: Load cấu hình `load_settings()`.
+  - [x] Bước 2: Gọi `fetch_source_records` hoặc `load_raw_records` (từ Thành viên 1).
+  - [x] Bước 3: Gọi `build_clean_dataframe` và lưu dữ liệu sạch (từ Thành viên 2).
+  - [x] Bước 4: Tạo Vector Index trong ChromaDB với collection `papers-baseline` (dùng `src/retrieval/index.py`).
+  - [x] Bước 5: Tạo hoặc đọc bộ kiểm thử `build_test_set` (từ Thành viên 2).
+  - [x] Bước 6: Chạy đánh giá RAG agent với `evaluate_pipeline(...)` và lưu `baseline_metrics.json`.
+  - [x] Bước 7: Thực hiện Data Quality checks và Freshness report (từ Thành viên 3).
+  - [x] Bước 8: Tạo báo cáo Markdown `phase1_report.md` (từ Thành viên 3).
 
-- [ ] **2. Hoàn thành `main()` trong `src/pipelines/corruption_flow.py` (Corruption & Repair Flow)**
-  - [ ] Bước 1: Load baseline metrics và dữ liệu sạch.
-  - [ ] Bước 2: Gọi `corrupt_clean_dataframe` và lưu dữ liệu lỗi (từ Thành viên 4).
-  - [ ] Bước 3: Rebuild Vector Index ChromaDB cho dữ liệu lỗi với collection `papers-corrupted`.
-  - [ ] Bước 4: Đánh giá RAG agent trên dữ liệu lỗi sử dụng cùng test set $\rightarrow$ lưu `corrupted_metrics.json`.
-  - [ ] Bước 5: Chạy Quality & Freshness checks trên dữ liệu lỗi.
-  - [ ] Bước 6: Thực hiện Repair dữ liệu từ bản ghi gốc thô.
-  - [ ] Bước 7: Build Vector Index ChromaDB cho dữ liệu đã phục hồi với collection `papers-repaired`.
-  - [ ] Bước 8: Đánh giá RAG agent trên dữ liệu đã phục hồi $\rightarrow$ lưu `repaired_metrics.json`.
-  - [ ] Bước 9: Chạy Quality & Freshness checks trên dữ liệu phục hồi.
-  - [ ] Bước 10: Sinh báo cáo so sánh tổng hợp `corruption_report.md` (từ Thành viên 3).
+- [x] **2. Hoàn thành `main()` trong `src/pipelines/corruption_flow.py` (Corruption & Repair Flow)**
+  - [x] Bước 1: Load baseline metrics và dữ liệu sạch.
+  - [x] Bước 2: Gọi `corrupt_clean_dataframe` và lưu dữ liệu lỗi (từ Thành viên 4).
+  - [x] Bước 3: Rebuild Vector Index ChromaDB cho dữ liệu lỗi với collection `papers-corrupted`.
+  - [x] Bước 4: Đánh giá RAG agent trên dữ liệu lỗi sử dụng cùng test set $\rightarrow$ lưu `corrupted_metrics.json`.
+  - [x] Bước 5: Chạy Quality & Freshness checks trên dữ liệu lỗi.
+  - [x] Bước 6: Thực hiện Repair dữ liệu từ bản ghi gốc thô.
+  - [x] Bước 7: Build Vector Index ChromaDB cho dữ liệu đã phục hồi với collection `papers-repaired`.
+  - [x] Bước 8: Đánh giá RAG agent trên dữ liệu đã phục hồi $\rightarrow$ lưu `repaired_metrics.json`.
+  - [x] Bước 9: Chạy Quality & Freshness checks trên dữ liệu phục hồi.
+  - [x] Bước 10: Sinh báo cáo so sánh tổng hợp `corruption_report.md` (từ Thành viên 3).
 
-- [ ] **3. Kiểm thử toàn bộ hệ thống (End-to-End Verification)**
-  - [ ] Chạy lệnh `python script/run_phase1.py` kiểm tra mã thoát = 0.
-  - [ ] Chạy lệnh `python script/run_corruption_flow.py` kiểm tra mã thoát = 0.
-  - [ ] Rà soát lại tất cả các file artifacts sinh ra trong thư mục `data/`.
+- [x] **3. Kiểm thử toàn bộ hệ thống (End-to-End Verification)**
+  - [x] Chạy lệnh `python script/run_phase1.py` kiểm tra mã thoát = 0.
+  - [x] Chạy lệnh `python script/run_corruption_flow.py` kiểm tra mã thoát = 0.
+  - [x] Rà soát lại tất cả các file artifacts sinh ra trong thư mục `data/`.
+
