@@ -49,7 +49,7 @@ def build_test_set(df: pd.DataFrame, output_path: str | Path) -> list[dict[str, 
                 {
                     "id": f"q_{question_idx:03d}",
                     "question_type": "authors",
-                    "question": f"Who are the authors of the paper titled '{title}'?",
+                    "question": f"Who authored the paper titled '{title}'?",
                     "ground_truth": authors,
                     "ground_truth_doc_ids": [paper_id],
                 }
@@ -75,7 +75,7 @@ def build_test_set(df: pd.DataFrame, output_path: str | Path) -> list[dict[str, 
                 {
                     "id": f"q_{question_idx:03d}",
                     "question_type": "categories",
-                    "question": f"What are the main categories or subjects of the paper '{title}'?",
+                    "question": f"What categories does the paper titled '{title}' cover?",
                     "ground_truth": categories,
                     "ground_truth_doc_ids": [paper_id],
                 }

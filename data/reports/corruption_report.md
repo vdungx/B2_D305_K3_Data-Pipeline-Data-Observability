@@ -8,10 +8,10 @@
 
 | Chỉ số / Trạng thái | Giai đoạn Baseline (Sạch) | Giai đoạn Corrupted (Lỗi) | Giai đoạn Repaired (Phục hồi) |
 | :--- | :---: | :---: | :---: |
-| **🎯 Retrieval Hit Rate** | `90.00%` | `40.00%` | `89.00%` |
-| **✍️ Mean Token F1** | `78.00%` | `35.00%` | `77.00%` |
-| **🤖 Judge Accuracy** | `85.00%` | `30.00%` | `84.00%` |
-| **⭐ Mean Judge Score** | `4.20 / 5.0` | `1.80 / 5.0` | `4.10 / 5.0` |
+| **🎯 Retrieval Hit Rate** | `100.00%` | `40.00%` | `100.00%` |
+| **✍️ Mean Token F1** | `100.00%` | `39.42%` | `100.00%` |
+| **🤖 Judge Accuracy** | `100.00%` | `40.00%` | `97.50%` |
+| **⭐ Mean Judge Score** | `5.00 / 5.0` | `2.67 / 5.0` | `4.95 / 5.0` |
 | **🛡️ Quality Checks Status** | `🟢 **PASSED (All)**` | 🔴 **FAILED** | 🟢 **PASSED (All)** |
 | **🕒 Freshness Status** | `🟢 **FRESH**` | 🔴 **STALE** | 🟢 **FRESH** |
 

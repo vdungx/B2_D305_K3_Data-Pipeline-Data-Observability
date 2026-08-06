@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-08-06T10:52:12.762498",
+  "report_name": "baseline",
+  "total_records": 24,
+  "checks": {
+    "row_count_check": {
+      "passed": true,
+      "observed": 24,
+      "message": "Passed: Found 24 records."
+    },
+    "paper_id_non_null_check": {
+      "passed": true,
+      "observed": 0,
+      "message": "Passed: 0 null/empty paper_ids."
+    },
+    "paper_id_unique_check": {
+      "passed": true,
+      "observed": true,
+      "message": "Passed: All paper_ids are unique."
+    },
+    "title_non_null_check": {
+      "passed": true,
+      "observed": 0,
+      "message": "Passed: 0 null/empty titles."
+    },
+    "summary_length_check": {
+      "passed": true,
+      "observed": 0,
+      "message": "Passed: All summaries meet the minimum length (>= 30 words)."
+    },
+    "freshness_check": {
+      "passed": true,
+      "observed": 0,
+      "message": "Passed: 0 stale papers found (threshold: 180 days)."
+    }
+  },
+  "all_passed": true
+}

@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-08-06T09:59:50.904928",
-  "report_name": "test_clean_quality",
-  "total_records": 3,
+  "timestamp": "2026-08-06T10:55:47.481399",
+  "report_name": "repaired",
+  "total_records": 24,
   "checks": {
     "row_count_check": {
       "passed": true,
-      "observed": 3,
-      "message": "Passed: Found 3 records."
+      "observed": 24,
+      "message": "Passed: Found 24 records."
     },
     "paper_id_non_null_check": {
       "passed": true,

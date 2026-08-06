@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from statistics import mean
 import os
+import re
 import sys
 import types
 from typing import Any
@@ -45,6 +46,15 @@ def _token_f1(reference: str, prediction: str) -> float:
     return 2 * precision * recall / (precision + recall)
 
 
+def _parse_judge_text(text: str, reference: str, prediction: str) -> JudgeVerdict:
+    score_match = re.search(r"score\s*[:*\s]+\s*(\d)", text, re.IGNORECASE)
+    score = int(score_match.group(1)) if score_match else 3
+    score = max(1, min(5, score))
+    correct = bool(re.search(r"correct\s*[:*\s]+\s*(true|yes)", text, re.IGNORECASE))
+    reasoning = text.strip()[:300] or "LLM judge response parsed from text."
+    return JudgeVerdict(score=score, correct=correct, reasoning=reasoning)
+
+
 def _judge_answer(settings: Settings, question: str, reference: str, prediction: str) -> JudgeVerdict:
     prompt = f"""
 Evaluate the model answer against the reference answer.
@@ -59,8 +69,12 @@ Return:
 - short reasoning
 """.strip()
     try:
-        llm = build_llm(settings=settings, temperature=0.0).with_structured_output(JudgeVerdict)
-        return llm.invoke(prompt)
+        llm = build_llm(settings=settings, temperature=0.0)
+        try:
+            return llm.with_structured_output(JudgeVerdict).invoke(prompt)
+        except Exception:
+            raw = llm.invoke(prompt)
+            return _parse_judge_text(str(raw.content), reference, prediction)
     except Exception:
         score = 5 if _token_f1(reference, prediction) >= 0.95 else 3 if _token_f1(reference, prediction) >= 0.5 else 1
         return JudgeVerdict(

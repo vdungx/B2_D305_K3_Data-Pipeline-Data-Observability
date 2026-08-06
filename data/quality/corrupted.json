@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-08-06T10:54:11.248860",
+  "report_name": "corrupted",
+  "total_records": 20,
+  "checks": {
+    "row_count_check": {
+      "passed": true,
+      "observed": 20,
+      "message": "Passed: Found 20 records."
+    },
+    "paper_id_non_null_check": {
+      "passed": true,
+      "observed": 0,
+      "message": "Passed: 0 null/empty paper_ids."
+    },
+    "paper_id_unique_check": {
+      "passed": false,
+      "observed": false,
+      "message": "Failed: Duplicate paper_ids found."
+    },
+    "title_non_null_check": {
+      "passed": true,
+      "observed": 0,
+      "message": "Passed: 0 null/empty titles."
+    },
+    "summary_length_check": {
+      "passed": false,
+      "observed": 4,
+      "message": "Failed: Found 4 summaries shorter than 30 words."
+    },
+    "freshness_check": {
+      "passed": false,
+      "observed": 3,
+      "message": "Failed: Found 3 stale papers."
+    }
+  },
+  "all_passed": false
+}
