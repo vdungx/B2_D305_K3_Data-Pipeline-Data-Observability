@@ -10,8 +10,8 @@
 | :--- | :---: | :---: | :---: |
 | **🎯 Retrieval Hit Rate** | `100.00%` | `40.00%` | `100.00%` |
 | **✍️ Mean Token F1** | `100.00%` | `39.42%` | `100.00%` |
-| **🤖 Judge Accuracy** | `100.00%` | `40.00%` | `97.50%` |
-| **⭐ Mean Judge Score** | `5.00 / 5.0` | `2.67 / 5.0` | `4.95 / 5.0` |
+| **🤖 Judge Accuracy** | `100.00%` | `40.00%` | `90.00%` |
+| **⭐ Mean Judge Score** | `5.00 / 5.0` | `2.65 / 5.0` | `4.70 / 5.0` |
 | **🛡️ Quality Checks Status** | `🟢 **PASSED (All)**` | 🔴 **FAILED** | 🟢 **PASSED (All)** |
 | **🕒 Freshness Status** | `🟢 **FRESH**` | 🔴 **STALE** | 🟢 **FRESH** |
 
