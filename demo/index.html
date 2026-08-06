@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Pipeline & JSON Payload Explorer — Group B2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-dark: #070a12;
+            --card-bg: rgba(15, 23, 42, 0.85);
+            --card-border: rgba(255, 255, 255, 0.08);
+            
+            --cyan: #06b6d4;
+            --green: #10b981;
+            --indigo: #6366f1;
+            --purple: #a855f7;
+            --amber: #f59e0b;
+            --rose: #ef4444;
+
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.12) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 1.1rem 2rem;
+            border-bottom: 1px solid var(--card-border);
+            background: rgba(7, 10, 18, 0.85);
+            backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand-badge {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--indigo), var(--cyan));
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .brand-title h1 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .brand-title p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.55rem 1.1rem;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.25s ease;
+        }
+
+        .btn-cyan {
+            background: linear-gradient(135deg, var(--indigo), var(--cyan));
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .btn-cyan:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.45);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--rose), #dc2626);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-green {
+            background: linear-gradient(135deg, var(--green), #059669);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid var(--card-border);
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1.75rem 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+        }
+
+        /* SECTION 1: ANIMATED PROCESSING FLOW STREAM */
+        .flow-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 1.75rem;
+            position: relative;
+        }
+
+        .flow-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.75rem;
+        }
+
+        .flow-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+        }
+
+        .nodes-grid {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+        }
+
+        .track-line-bg {
+            position: absolute;
+            top: 48%;
+            left: 6%;
+            right: 6%;
+            height: 4px;
+            background: var(--card-border);
+            z-index: 1;
+            transform: translateY(-50%);
+        }
+
+        .track-line-active {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, var(--indigo), var(--cyan), var(--green));
+            box-shadow: 0 0 15px var(--cyan);
+            transition: width 0.4s ease;
+        }
+
+        .packet-glow {
+            position: absolute;
+            top: 50%;
+            left: 0%;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 15px var(--cyan), 0 0 30px var(--cyan);
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 10;
+        }
+
+        .stage-node {
+            background: #090e1a;
+            border: 1.5px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.25rem 0.85rem;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .stage-node.active {
+            background: #141e33;
+            border-color: var(--cyan);
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.25);
+        }
+
+        .node-step-tag {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--cyan);
+        }
+
+        .node-name {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .node-owner {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        /* SECTION 2: VISUAL JSON PAYLOAD EXPLORER */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* VISUAL SYNTAX HIGHLIGHTED JSON TREE */
+        .json-visual-container {
+            background: #040711;
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 1.25rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            height: 320px;
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+
+        .json-key { color: var(--cyan); font-weight: 600; }
+        .json-string { color: #a5f3fc; }
+        .json-number { color: var(--amber); font-weight: 600; }
+        .json-boolean { color: var(--green); font-weight: 700; }
+        .json-null { color: var(--rose); font-weight: 700; }
+        .json-bracket { color: var(--text-dim); }
+
+        /* VISUAL FIELD CARDS */
+        .field-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.85rem;
+        }
+
+        .field-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .field-label {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .field-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+            word-break: break-all;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid var(--card-border);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="brand">
+            <div class="brand-badge">B2</div>
+            <div class="brand-title">
+                <h1>Visual JSON Payload Explorer</h1>
+                <p>Trực Quan Hóa Cấu Trúc JSON & Luồng Dữ Liệu Real-Time — Group B2</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-cyan" onclick="startVisualPipelineStream()">▶ Run Pipeline Stream</button>
+            <button class="btn btn-danger" onclick="executeCorruptFlow()">💥 Corrupt Flow</button>
+            <button class="btn btn-green" onclick="executeRepairFlow()">🛠️ Repair Flow</button>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- SECTION 1: ANIMATED PROCESSING FLOW STREAM -->
+        <section class="flow-card">
+            <div class="flow-header">
+                <div class="flow-title">
+                    <span>📌 Quy Trình Luồng Xử Lý Dữ Liệu (Processing Stream)</span>
+                </div>
+                <span class="btn btn-outline" style="font-size: 0.75rem;" id="stream-status">Ready</span>
+            </div>
+
+            <div class="nodes-grid">
+                <div class="track-line-bg">
+                    <div class="track-line-active" id="track-progress"></div>
+                    <div class="packet-glow" id="packet-dot"></div>
+                </div>
+
+                <div class="stage-node active" id="st-1" onclick="setActiveStage(1)">
+                    <div class="node-step-tag">BƯỚC 1</div>
+                    <div class="node-name">Crossref Ingestion</div>
+                    <div class="node-owner">Quân (TV 1)</div>
+                </div>
+
+                <div class="stage-node" id="st-2" onclick="setActiveStage(2)">
+                    <div class="node-step-tag">BƯỚC 2</div>
+                    <div class="node-name">Data Cleaning</div>
+                    <div class="node-owner">Dũng (TV 2)</div>
+                </div>
+
+                <div class="stage-node" id="st-3" onclick="setActiveStage(3)">
+                    <div class="node-step-tag">BƯỚC 3</div>
+                    <div class="node-name">Observability</div>
+                    <div class="node-owner">Đông (TV 3)</div>
+                </div>
+
+                <div class="stage-node" id="st-4" onclick="setActiveStage(4)">
+                    <div class="node-step-tag">BƯỚC 4</div>
+                    <div class="node-name">ChromaDB Store</div>
+                    <div class="node-owner">Huy (TV 5)</div>
+                </div>
+
+                <div class="stage-node" id="st-5" onclick="setActiveStage(5)">
+                    <div class="node-step-tag">BƯỚC 5</div>
+                    <div class="node-name">RAG Evaluation</div>
+                    <div class="node-owner">Huy (TV 5)</div>
+                </div>
+
+                <div class="stage-node" id="st-6" onclick="setActiveStage(6)">
+                    <div class="node-step-tag">BƯỚC 6</div>
+                    <div class="node-name">Corruption & Repair</div>
+                    <div class="node-owner">Mạnh (TV 4)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: VISUAL JSON TREE VIEWER & FIELD CARDS -->
+        <div class="grid-2">
+            
+            <!-- LEFT: SYNTAX HIGHLIGHTED VISUAL JSON TREE -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-title" id="json-card-title">🌳 Visual JSON Tree Viewer (Highlighted)</div>
+                    <span style="font-size: 0.78rem; color: var(--cyan); font-family: monospace;" id="json-schema-tag">Raw Snapshot</span>
+                </div>
+                <div class="json-visual-container" id="json-tree-display">
+                    <!-- Injected by JS -->
+                </div>
+            </div>
+
+            <!-- RIGHT: STRUCTURED FIELD EXTRACTOR CARDS -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-title">🔍 Visual Field Extractor (Trích Xuất Trường)</div>
+                    <span style="font-size: 0.78rem; color: var(--green);" id="quality-badge">PASSED</span>
+                </div>
+
+                <div class="field-grid" id="field-cards-container">
+                    <div class="field-card">
+                        <div class="field-label">Paper ID (DOI)</div>
+                        <div class="field-value" style="color: var(--cyan);">10.2118/234689-pa</div>
+                    </div>
+                    <div class="field-card">
+                        <div class="field-label">Published Date</div>
+                        <div class="field-value">2026-08-01</div>
+                    </div>
+                    <div class="field-card">
+                        <div class="field-label">Authors Count</div>
+                        <div class="field-value">4 Tác giả</div>
+                    </div>
+                    <div class="field-card">
+                        <div class="field-label">Summary Length</div>
+                        <div class="field-value" style="color: var(--green);">1404 ký tự</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1.25rem;">
+                    <div class="card-title" style="font-size: 0.9rem; margin-bottom: 0.5rem;">📊 RAG Performance Metrics:</div>
+                    <div class="chart-wrapper">
+                        <canvas id="jsonMetricsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        Visual JSON Payload Explorer &copy; Group B2 (Day 10 Lab)
+    </footer>
+
+    <script>
+        let jsonChartInstance = null;
+
+        function renderVisualJSON(obj) {
+            const jsonStr = JSON.stringify(obj, null, 2);
+            // Add syntax highlighting HTML spans
+            const html = jsonStr.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                let cls = 'json-number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'json-key';
+                    } else {
+                        cls = 'json-string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'json-boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'json-null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+            return html;
+        }
+
+        function initChart() {
+            const ctx = document.getElementById("jsonMetricsChart").getContext("2d");
+            jsonChartInstance = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: ["Hit Rate", "Token F1", "Judge Acc", "Score (/5)"],
+                    datasets: [{
+                        label: "RAG Evaluation Metrics",
+                        data: [100, 100, 90, 94],
+                        backgroundColor: ["#10b981", "#06b6d4", "#6366f1", "#a855f7"],
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, max: 100, ticks: { color: "#94a3b8" } },
+                        x: { ticks: { color: "#94a3b8" } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        let currentStage = 1;
+        async function setActiveStage(step) {
+            currentStage = step;
+            for (let i = 1; i <= 6; i++) {
+                const el = document.getElementById(`st-${i}`);
+                if (i === step) el.classList.add("active");
+                else el.classList.remove("active");
+            }
+
+            const titleBox = document.getElementById("json-card-title");
+            const schemaTag = document.getElementById("json-schema-tag");
+            const jsonTree = document.getElementById("json-tree-display");
+            const fieldsBox = document.getElementById("field-cards-container");
+
+            if (step === 1) {
+                titleBox.innerText = "🌳 Visual JSON Tree: Bước 1 — Crossref Ingestion";
+                schemaTag.innerText = "Raw Snapshot JSON";
+                const res = await fetch("/api/raw-papers");
+                const data = await res.json();
+                jsonTree.innerHTML = renderVisualJSON(data);
+
+                fieldsBox.innerHTML = `
+                    <div class="field-card"><div class="field-label">Raw Records Fetched</div><div class="field-value" style="color: var(--cyan);">${data.count || 24} Papers</div></div>
+                    <div class="field-card"><div class="field-label">Source API</div><div class="field-value">Crossref REST</div></div>
+                    <div class="field-card"><div class="field-label">Has Abstract Filter</div><div class="field-value" style="color: var(--green);">TRUE</div></div>
+                    <div class="field-card"><div class="field-label">Raw Snapshot Path</div><div class="field-value" style="font-size:0.75rem;">crossref_records.json</div></div>
+                `;
+            } else if (step === 2) {
+                titleBox.innerText = "⚙️ Visual JSON Tree: Bước 2 — Data Cleaning";
+                schemaTag.innerText = "Cleaned DataFrame JSON";
+                const res = await fetch("/api/clean-papers");
+                const data = await res.json();
+                jsonTree.innerHTML = renderVisualJSON(data);
+
+                fieldsBox.innerHTML = `
+                    <div class="field-card"><div class="field-label">Cleaning Status</div><div class="field-value" style="color: var(--green);">CLEANED</div></div>
+                    <div class="field-card"><div class="field-label">HTML Strip Regex</div><div class="field-value" style="font-size:0.75rem;">re.sub(r'<[^>]+>', '')</div></div>
+                    <div class="field-card"><div class="field-label">ISO Date Format</div><div class="field-value">YYYY-MM-DD</div></div>
+                    <div class="field-card"><div class="field-label">Age Days Computed</div><div class="field-value" style="color: var(--cyan);">5 ngày</div></div>
+                `;
+            } else if (step === 3) {
+                titleBox.innerText = "🛡️ Visual JSON Tree: Bước 3 — Data Observability";
+                schemaTag.innerText = "Quality Checks JSON";
+                const report = {
+                    "report_name": "baseline",
+                    "total_records": 24,
+                    "checks": {
+                        "row_count_check": { "passed": true, "observed": 24 },
+                        "paper_id_unique_check": { "passed": true, "observed": true },
+                        "summary_length_check": { "passed": true, "observed": 0 },
+                        "freshness_check": { "passed": true, "observed": 0 }
+                    },
+                    "all_passed": true,
+                    "freshness_status": "FRESH"
+                };
+                jsonTree.innerHTML = renderVisualJSON(report);
+
+                fieldsBox.innerHTML = `
+                    <div class="field-card"><div class="field-label">Overall Quality</div><div class="field-value" style="color: var(--green);">ALL PASSED</div></div>
+                    <div class="field-card"><div class="field-label">Paper ID Uniqueness</div><div class="field-value" style="color: var(--green);">100% Unique</div></div>
+                    <div class="field-card"><div class="field-label">Summary Length</div><div class="field-value" style="color: var(--green);">&ge; 30 Words</div></div>
+                    <div class="field-card"><div class="field-label">Data Freshness</div><div class="field-value" style="color: var(--cyan);">FRESH (&le;5 days)</div></div>
+                `;
+            } else if (step === 4) {
+                titleBox.innerText = "🗄️ Visual JSON Tree: Bước 4 — ChromaDB Vector Store";
+                schemaTag.innerText = "Embedding Config JSON";
+                const indexObj = {
+                    "collection": "papers-baseline",
+                    "embedding_model": "all-MiniLM-L6-v2",
+                    "dimensions": 384,
+                    "indexed_documents": 24,
+                    "metric": "HNSW Cosine Similarity"
+                };
+                jsonTree.innerHTML = renderVisualJSON(indexObj);
+
+                fieldsBox.innerHTML = `
+                    <div class="field-card"><div class="field-label">Vector Store</div><div class="field-value" style="color: var(--indigo);">ChromaDB</div></div>
+                    <div class="field-card"><div class="field-label">Embedding Dimensions</div><div class="field-value">384 Dimensions</div></div>
+                    <div class="field-card"><div class="field-label">Indexed Documents</div><div class="field-value" style="color: var(--cyan);">24 Papers</div></div>
+                    <div class="field-card"><div class="field-label">Distance Metric</div><div class="field-value">Cosine Distance</div></div>
+                `;
+            } else if (step === 5) {
+                titleBox.innerText = "🤖 Visual JSON Tree: Bước 5 — RAG Benchmark Metrics";
+                schemaTag.innerText = "Evaluation Results JSON";
+                const evalObj = {
+                    "retrieval_hit_rate": 1.0,
+                    "mean_token_f1": 1.0,
+                    "judge_accuracy": 0.90,
+                    "mean_judge_score": 4.70,
+                    "eval_sample_count": 40
+                };
+                jsonTree.innerHTML = renderVisualJSON(evalObj);
+
+                fieldsBox.innerHTML = `
+                    <div class="field-card"><div class="field-label">Retrieval Hit Rate</div><div class="field-value" style="color: var(--green);">100%</div></div>
+                    <div class="field-card"><div class="field-label">Mean Token F1</div><div class="field-value" style="color: var(--cyan);">100%</div></div>
+                    <div class="field-card"><div class="field-label">LLM Judge Score</div><div class="field-value" style="color: var(--purple);">4.70 / 5.0</div></div>
+                    <div class="field-card"><div class="field-label">Benchmark Samples</div><div class="field-value">40 Questions</div></div>
+                `;
+            } else if (step === 6) {
+                titleBox.innerText = "⚡ Visual JSON Tree: Bước 6 — Corruption & Auto-Repair";
+                schemaTag.innerText = "Pipeline Execution Log JSON";
+                const repairObj = {
+                    "repair_source": "data/raw/crossref_records.json",
+                    "pipeline_reexecuted": "build_clean_dataframe()",
+                    "quality_checks": "100% PASSED",
+                    "metrics_recovered": { "hit_rate": "100%", "judge_score": "4.70/5.0" }
+                };
+                jsonTree.innerHTML = renderVisualJSON(repairObj);
+
+                fieldsBox.innerHTML = `
+                    <div class="field-card"><div class="field-label">Auto-Repair Source</div><div class="field-value" style="font-size:0.75rem;">crossref_records.json</div></div>
+                    <div class="field-card"><div class="field-label">Clean Function</div><div class="field-value" style="font-size:0.75rem;">build_clean_dataframe()</div></div>
+                    <div class="field-card"><div class="field-label">Observability Status</div><div class="field-value" style="color: var(--green);">100% PASSED</div></div>
+                    <div class="field-card"><div class="field-label">Hit Rate Recovered</div><div class="field-value" style="color: var(--green);">100%</div></div>
+                `;
+            }
+
+            const pct = ((step - 1) / 5) * 100;
+            document.getElementById("track-progress").style.width = pct + "%";
+        }
+
+        let isStreaming = false;
+        async function startVisualPipelineStream() {
+            if (isStreaming) return;
+            isStreaming = true;
+
+            const packet = document.getElementById("packet-dot");
+            packet.style.display = "block";
+
+            for (let i = 1; i <= 6; i++) {
+                await setActiveStage(i);
+                const pct = ((i - 1) / 5) * 100;
+                packet.style.left = pct + "%";
+                await new Promise(r => setTimeout(r, 900));
+            }
+
+            packet.style.display = "none";
+            isStreaming = false;
+        }
+
+        async function executeCorruptFlow() {
+            await fetch("/api/run-corruption", { method: "POST" });
+            jsonChartInstance.data.datasets[0].data = [40, 39.42, 40, 53.6];
+            jsonChartInstance.data.datasets[0].backgroundColor = ["#ef4444", "#ef4444", "#ef4444", "#ef4444"];
+            jsonChartInstance.update();
+            document.getElementById("quality-badge").innerText = "FAILED (3 Lỗi)";
+            document.getElementById("quality-badge").style.color = "var(--rose)";
+            await setActiveStage(6);
+        }
+
+        async function executeRepairFlow() {
+            await fetch("/api/run-repair", { method: "POST" });
+            jsonChartInstance.data.datasets[0].data = [100, 100, 90, 94];
+            jsonChartInstance.data.datasets[0].backgroundColor = ["#10b981", "#06b6d4", "#6366f1", "#a855f7"];
+            jsonChartInstance.update();
+            document.getElementById("quality-badge").innerText = "PASSED";
+            document.getElementById("quality-badge").style.color = "var(--green)";
+            await setActiveStage(6);
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            initChart();
+            setActiveStage(1);
+        });
+    </script>
+</body>
+</html>
