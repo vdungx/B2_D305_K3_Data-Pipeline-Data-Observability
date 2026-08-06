@@ -11,7 +11,7 @@
 | Khóa/Lớp         | K3                         |
 | Tên nhóm         | B2                         |
 | Vai trò chính    | Integration & Pipeline Execution |
-| Repository         | https://github.com/VinUni-AI20k/K3_Day10_Data-Pipeline-Data-Observability |
+| Repository         | https://github.com/vdungx/B2_D305_K3_Data-Pipeline-Data-Observability |
 | Ngày hoàn thành | 2026-08-06                 |
 
 ## 2. Vai trò và phạm vi công việc
@@ -159,7 +159,7 @@ Hoàn tất Ragas (`RUN_RAGAS=1`) với 4 metrics LLM-based (answer_relevancy, c
 - [x] Tôi có thể giải thích luồng end-to-end, không chỉ module mình phụ trách.
 - [x] Mọi kết luận về kết quả đều có artifact hoặc metric để đối chiếu.
 - [x] Tôi không ghi “đã chạy thành công” cho phần chưa được kiểm chứng.
-- [ ] Báo cáo không chứa `.env`, API key, token hoặc secret.
+- [x] Báo cáo không chứa `.env`, API key, token hoặc secret.
 - [x] Báo cáo này không phải bản sao nguyên văn của báo cáo nhóm hoặc báo cáo thành viên khác.
 
 **Họ và tên:** Nguyễn Viết Huy
