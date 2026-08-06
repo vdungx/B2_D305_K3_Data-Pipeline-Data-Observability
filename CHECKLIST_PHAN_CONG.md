@@ -71,33 +71,33 @@
 ## 👤 Thành viên 3: Lê Văn Đông (Observability & Reporting)
 **Phụ trách chính**: `src/observability/quality.py`, `src/observability/reporting.py`
 
-- [ ] **1. Hoàn thành `src/observability/quality.py`**
-  - [ ] **Hàm `run_data_quality_checks(df, settings, report_name)`**:
+- [x] **1. Hoàn thành `src/observability/quality.py`**
+  - [x] **Hàm `run_data_quality_checks(df, settings, report_name)`**:
     - Kiểm tra tổng số dòng trong DataFrame ($>0$).
     - Kiểm tra cột `paper_id` không null và duy nhất (Unique).
     - Kiểm tra cột `title` không rỗng.
     - Kiểm tra độ dài summary đạt ngưỡng tối thiểu.
     - Kiểm tra độ tươi dữ liệu (`age_days <= settings.freshness_threshold_days`).
     - Lưu kết quả kiểm tra dạng JSON vào `data/quality/<report_name>.json`.
-  - [ ] **Hàm `build_freshness_report(df, settings, report_path)`**:
+  - [x] **Hàm `build_freshness_report(df, settings, report_path)`**:
     - Xác định ngày mới nhất (`latest_published`) và cũ nhất (`oldest_published`).
     - Đếm số lượng dòng bị cũ/lạc hậu (`stale_rows`).
     - Tổng hợp trạng thái `is_fresh` (True/False).
     - Lưu báo cáo JSON vào `data/quality/freshness_report.json`.
 
-- [ ] **2. Hoàn thành `src/observability/reporting.py`**
-  - [ ] **Hàm `generate_phase1_report(...)`**:
+- [x] **2. Hoàn thành `src/observability/reporting.py`**
+  - [x] **Hàm `generate_phase1_report(...)`**:
     - Tổng hợp thông tin nguồn dữ liệu (Source Summary).
     - Thống kê kết quả đánh giá Baseline (Retrieval Hit Rate, Token F1, Judge Accuracy, Mean Judge Score).
     - Hiển thị kết quả Data Quality Checks và Freshness Status.
     - Xuất báo cáo định dạng Markdown tại `data/reports/phase1_report.md`.
-  - [ ] **Hàm `generate_corruption_report(...)`**:
+  - [x] **Hàm `generate_corruption_report(...)`**:
     - Tạo bảng so sánh đối chiếu chi tiết 3 giai đoạn: **Baseline vs Corrupted vs Repaired**.
     - So sánh sự sụt giảm metrics khi dữ liệu bị lỗi và sự khôi phục khi được sửa chữa.
     - Đưa ra kết luận và bài học về tầm quan trọng của Data Observability.
     - Xuất báo cáo Markdown tại `data/reports/corruption_report.md`.
 
-- [ ] **3. Kiểm thử thành phần (Verification)**
+- [x] **3. Kiểm thử thành phần (Verification)**
   - Mở các file Markdown sinh ra và kiểm tra tính trực quan, chính xác của thông số.
 
 ---

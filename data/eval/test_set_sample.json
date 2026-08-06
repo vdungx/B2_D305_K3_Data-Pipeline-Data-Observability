@@ -1,0 +1,38 @@
+[
+  {
+    "id": "q_001",
+    "question_type": "summary",
+    "question": "What is the main finding or summary of the paper titled 'Agentic RAG Test Paper'?",
+    "ground_truth": "This is a valid summary for testing the cleaning and testset pipeline.",
+    "ground_truth_doc_ids": [
+      "10.1016/test.1"
+    ]
+  },
+  {
+    "id": "q_002",
+    "question_type": "authors",
+    "question": "Who are the authors of the paper titled 'Agentic RAG Test Paper'?",
+    "ground_truth": "John Doe, Jane Smith",
+    "ground_truth_doc_ids": [
+      "10.1016/test.1"
+    ]
+  },
+  {
+    "id": "q_003",
+    "question_type": "date",
+    "question": "When was the paper 'Agentic RAG Test Paper' published?",
+    "ground_truth": "2024-05-10",
+    "ground_truth_doc_ids": [
+      "10.1016/test.1"
+    ]
+  },
+  {
+    "id": "q_004",
+    "question_type": "categories",
+    "question": "What are the main categories or subjects of the paper 'Agentic RAG Test Paper'?",
+    "ground_truth": "Computer Science, AI",
+    "ground_truth_doc_ids": [
+      "10.1016/test.1"
+    ]
+  }
+]

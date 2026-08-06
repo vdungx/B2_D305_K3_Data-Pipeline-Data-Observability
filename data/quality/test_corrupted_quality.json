@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-08-06T09:59:50.905892",
+  "report_name": "test_corrupted_quality",
+  "total_records": 3,
+  "checks": {
+    "row_count_check": {
+      "passed": true,
+      "observed": 3,
+      "message": "Passed: Found 3 records."
+    },
+    "paper_id_non_null_check": {
+      "passed": false,
+      "observed": 1,
+      "message": "Failed: Found 1 null or empty paper_ids."
+    },
+    "paper_id_unique_check": {
+      "passed": false,
+      "observed": false,
+      "message": "Failed: Duplicate paper_ids found."
+    },
+    "title_non_null_check": {
+      "passed": false,
+      "observed": 1,
+      "message": "Failed: Found 1 null or empty titles."
+    },
+    "summary_length_check": {
+      "passed": false,
+      "observed": 2,
+      "message": "Failed: Found 2 summaries shorter than 30 words."
+    },
+    "freshness_check": {
+      "passed": false,
+      "observed": 1,
+      "message": "Failed: Found 1 stale papers."
+    }
+  },
+  "all_passed": false
+}
