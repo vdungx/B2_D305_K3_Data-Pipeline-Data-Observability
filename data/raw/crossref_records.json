@@ -24,15 +24,10 @@
     "authors": [
       "Lihui Liu"
     ],
-<<<<<<< Updated upstream
     "categories": [
       "Computer Science"
     ],
     "primary_category": "Computer Science",
-=======
-    "categories": [],
-    "primary_category": "",
->>>>>>> Stashed changes
     "published": "2026-03-05",
     "updated": "2026-03-05",
     "abs_url": "https://doi.org/10.36227/techrxiv.177272838.89432844/v1",
@@ -70,19 +65,12 @@
       "Zhen Qi",
       "Huajun Zhang"
     ],
-<<<<<<< Updated upstream
     "categories": [
       "Computer Science"
     ],
     "primary_category": "Computer Science",
     "published": "2026-04-07",
     "updated": "2026-04-07",
-=======
-    "categories": [],
-    "primary_category": "",
-    "published": "2026-04-06",
-    "updated": "2026-04-06",
->>>>>>> Stashed changes
     "abs_url": "https://doi.org/10.20944/preprints202604.0339.v1",
     "pdf_url": "",
     "comment": "MDPI AG"
@@ -131,19 +119,12 @@
       "Donald Martin",
       "Blake Bowman"
     ],
-<<<<<<< Updated upstream
     "categories": [
       "Computer Science"
     ],
     "primary_category": "Computer Science",
     "published": "2026-02-13",
     "updated": "2026-02-13",
-=======
-    "categories": [],
-    "primary_category": "",
-    "published": "2026-02-12",
-    "updated": "2026-02-12",
->>>>>>> Stashed changes
     "abs_url": "https://doi.org/10.20944/preprints202602.0996.v1",
     "pdf_url": "",
     "comment": "MDPI AG"
@@ -175,19 +156,12 @@
       "Alexander Cresswell",
       "Alice Huffman"
     ],
-<<<<<<< Updated upstream
     "categories": [
       "Computer Science"
     ],
     "primary_category": "Computer Science",
     "published": "2026-07-06",
     "updated": "2026-07-06",
-=======
-    "categories": [],
-    "primary_category": "",
-    "published": "2026-07-03",
-    "updated": "2026-07-03",
->>>>>>> Stashed changes
     "abs_url": "https://doi.org/10.2196/preprints.106157",
     "pdf_url": "",
     "comment": "JMIR Publications Inc."
@@ -200,15 +174,10 @@
       "Audrey Rah",
       "Sven Hahues"
     ],
-<<<<<<< Updated upstream
     "categories": [
       "Computer Science"
     ],
     "primary_category": "Computer Science",
-=======
-    "categories": [],
-    "primary_category": "",
->>>>>>> Stashed changes
     "published": "2026-06-15",
     "updated": "2026-06-15",
     "abs_url": "https://doi.org/10.21203/rs.3.rs-10012178/v1",
@@ -266,15 +235,10 @@
       "Thomas Sigler",
       "Victoria D. Moore"
     ],
-<<<<<<< Updated upstream
     "categories": [
       "Computer Science"
     ],
     "primary_category": "Computer Science",
-=======
-    "categories": [],
-    "primary_category": "",
->>>>>>> Stashed changes
     "published": "2026-07-01",
     "updated": "2026-07-01",
     "abs_url": "https://doi.org/10.21079/11681/50309",
@@ -370,15 +334,10 @@
       "Novanto Yudistira",
       "Yanuar Putra Kharisma Adhiyasa"
     ],
-<<<<<<< Updated upstream
     "categories": [
       "Computer Science"
     ],
     "primary_category": "Computer Science",
-=======
-    "categories": [],
-    "primary_category": "",
->>>>>>> Stashed changes
     "published": "2026-07-10",
     "updated": "2026-07-10",
     "abs_url": "https://doi.org/10.21203/rs.3.rs-10178277/v1",
@@ -393,15 +352,10 @@
       "Kushal Budha",
       "Nikesh Lagun"
     ],
-<<<<<<< Updated upstream
     "categories": [
       "Computer Science"
     ],
     "primary_category": "Computer Science",
-=======
-    "categories": [],
-    "primary_category": "",
->>>>>>> Stashed changes
     "published": "2026-06-02",
     "updated": "2026-06-02",
     "abs_url": "https://doi.org/10.21203/rs.3.rs-9882260/v1",
@@ -471,15 +425,10 @@
     "authors": [
       "AMOS MBEKI NYAGAR"
     ],
-<<<<<<< Updated upstream
     "categories": [
       "Computer Science"
     ],
     "primary_category": "Computer Science",
-=======
-    "categories": [],
-    "primary_category": "",
->>>>>>> Stashed changes
     "published": "2026-05-22",
     "updated": "2026-05-22",
     "abs_url": "https://doi.org/10.21203/rs.3.rs-9770645/v1",
@@ -488,11 +437,7 @@
   },
   {
     "paper_id": "10.1111/exsy.70341",
-<<<<<<< Updated upstream
     "title": "Hi\u2010 RAG : A Hierarchical Retrieval\u2010Augmented Generation Framework for Scalable and Generalisable Tool Selection in Large Language Model Agents",
-=======
-    "title": "Hi\u2010 <scp>RAG</scp> : A Hierarchical Retrieval\u2010Augmented Generation Framework for Scalable and Generalisable Tool Selection in Large Language Model Agents",
->>>>>>> Stashed changes
     "summary": "ABSTRACT As tool repositories for Large Language Model (LLM) agents grow from dozens to hundreds of endpoints, flat retrieval paradigms that treat the repository as an unstructured list suffer from context overload, cross\u2010domain semantic collision and degraded selection accuracy. We propose Hi\u2010RAG, a Hierarchical Retrieval\u2010Augmented Generation framework that exploits the Type Service Tool structure of the Model Context Protocol (MCP) via a principled coarse\u2010to\u2010fine pipeline. Stage 1 applies a Tool\u2010as\u2010Proxy hybrid retrieval strategy (BM25 sparse retrieval combined with dense bi\u2010encoder search, fused via Weighted Reciprocal Rank Fusion) to identify candidate services efficiently. Stage 2 performs type\u2010aware re\u2010ranking over a local heterogeneous graph, integrating a domain\u2010level gating mechanism with contextualised tool attention for precise service scoring. We further introduce MCPBench , the first benchmark for hierarchical tool selection, comprising 201 tools across 40 real\u2010enterprise services\u201423% of queries require multi\u2010service reasoning. Experiments across five LLMs show Hi\u2010RAG improves Top\u20101 accuracy by up to 7.5% (single\u2010service) and 10.0% (multi\u2010service) over Flat\u2010RAG, while reducing token consumption by up to 89% against full\u2010context injection. Comparisons with a strong late\u2010interaction baseline (ColBERT\u2010RAG) further confirm the superiority of Hi\u2010RAG. Zero\u2010shot evaluation on ToolLLM (16,464 tools) confirms scalability, and formal analyses establish context growth with respect to repository size.",
     "authors": [
       "Wei Tian",
