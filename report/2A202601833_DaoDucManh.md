@@ -9,7 +9,7 @@
 | Khóa/Lớp | Khóa 3 / D305 |
 | Tên nhóm | B2 |
 | Vai trò chính | Data Corruption & Repair |
-| Repository | `B2_D305_K3_Data-Pipeline-Data-Observability` |
+| Repository | `https://github.com/vdungx/B2_D305_K3_Data-Pipeline-Data-Observability/` |
 | Ngày hoàn thành | 2026-08-06 |
 
 ## 2. Vai trò và phạm vi công việc
