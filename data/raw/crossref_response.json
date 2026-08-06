@@ -4,7 +4,11 @@
   "message-version": "1.0.0",
   "message": {
     "facets": {},
+<<<<<<< Updated upstream
     "total-results": 100902,
+=======
+    "total-results": 100916,
+>>>>>>> Stashed changes
     "items": [
       {
         "indexed": {
@@ -120,7 +124,11 @@
           "date-time": "2026-06-17T08:00:36Z",
           "timestamp": 1781683236000
         },
+<<<<<<< Updated upstream
         "score": 39.924343,
+=======
+        "score": 39.924065,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://ieiap.ru/journal"
@@ -277,7 +285,11 @@
           "date-time": "2026-06-12T16:31:45Z",
           "timestamp": 1781281905000
         },
+<<<<<<< Updated upstream
         "score": 38.16614,
+=======
+        "score": 38.166374,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://www.techrxiv.org/doi/full/10.36227/techrxiv.177272838.89432844/v1"
@@ -442,7 +454,11 @@
           "date-time": "2026-07-17T01:44:05Z",
           "timestamp": 1784252645000
         },
+<<<<<<< Updated upstream
         "score": 37.591236,
+=======
+        "score": 37.595245,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://inatgi.net/index.php/jaiaa/article/view/806"
@@ -643,7 +659,11 @@
           "date-time": "2026-04-07T00:32:52Z",
           "timestamp": 1775521972000
         },
+<<<<<<< Updated upstream
         "score": 37.491684,
+=======
+        "score": 37.491043,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://www.preprints.org/manuscript/202604.0339/v1"
@@ -1059,7 +1079,11 @@
           "date-time": "2026-02-28T05:20:35Z",
           "timestamp": 1772256035000
         },
+<<<<<<< Updated upstream
         "score": 36.650337,
+=======
+        "score": 36.65119,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://www.mdpi.com/2076-3417/16/5/2244"
@@ -1204,7 +1228,11 @@
           "date-time": "2026-05-06T16:40:10Z",
           "timestamp": 1778085610000
         },
+<<<<<<< Updated upstream
         "score": 36.512882,
+=======
+        "score": 36.513294,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://isjem.com/download/speculative-retrieval-augmented-generation-for-cost-efficient-large-language-model-inference/"
@@ -1366,7 +1394,11 @@
           "date-time": "2026-02-13T02:08:03Z",
           "timestamp": 1770948483000
         },
+<<<<<<< Updated upstream
         "score": 36.19586,
+=======
+        "score": 36.19632,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://www.preprints.org/manuscript/202602.0996/v1"
@@ -1838,7 +1870,11 @@
           "date-time": "2026-07-02T10:56:27Z",
           "timestamp": 1782989787000
         },
+<<<<<<< Updated upstream
         "score": 35.716484,
+=======
+        "score": 35.71688,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://www.mdpi.com/2075-5309/16/13/2637"
@@ -2000,7 +2036,11 @@
           "date-time": "2026-07-06T03:55:08Z",
           "timestamp": 1783310108000
         },
+<<<<<<< Updated upstream
         "score": 35.636425,
+=======
+        "score": 35.635925,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "http://preprints.jmir.org/preprint/106157"
@@ -2171,7 +2211,11 @@
           "date-time": "2026-06-15T06:08:17Z",
           "timestamp": 1781503697000
         },
+<<<<<<< Updated upstream
         "score": 35.509655,
+=======
+        "score": 35.51028,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://www.researchsquare.com/article/rs-10012178/v1"
@@ -2652,7 +2696,11 @@
           "date-time": "2026-08-05T14:18:01Z",
           "timestamp": 1785939481000
         },
+<<<<<<< Updated upstream
         "score": 34.93205,
+=======
+        "score": 34.93249,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://onepetro.org/SJ/article/doi/10.2118/234689-PA/801839/SafeRAG-A-Large-Language-Model-Based-Multistage"
@@ -2859,7 +2907,11 @@
           "date-time": "2026-07-04T20:37:12Z",
           "timestamp": 1783197432000
         },
+<<<<<<< Updated upstream
         "score": 34.668846,
+=======
+        "score": 34.66881,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://www.ejournal.ummuba.ac.id/index.php/JUPTIK/article/view/4318"
@@ -3028,7 +3080,11 @@
           "date-time": "2026-07-10T14:51:37Z",
           "timestamp": 1783695097000
         },
+<<<<<<< Updated upstream
         "score": 34.478554,
+=======
+        "score": 34.479237,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://hdl.handle.net/11681/50309"
@@ -3601,7 +3657,11 @@
           "date-time": "2026-07-13T14:44:27Z",
           "timestamp": 1783953867000
         },
+<<<<<<< Updated upstream
         "score": 34.355778,
+=======
+        "score": 34.356194,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://link.springer.com/10.1007/s10278-026-02086-9"
@@ -3823,7 +3883,11 @@
           "date-time": "2026-03-06T11:10:27Z",
           "timestamp": 1772795427000
         },
+<<<<<<< Updated upstream
         "score": 34.278587,
+=======
+        "score": 34.28979,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://www.scholarlyreview.org/article/158711-the-role-of-retrieval-augmented-generation-in-improving-factual-accuracy-for-medical-large-language-models"
@@ -4016,7 +4080,11 @@
           "date-time": "2026-02-26T14:41:27Z",
           "timestamp": 1772116887000
         },
+<<<<<<< Updated upstream
         "score": 34.166348,
+=======
+        "score": 34.165775,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://jurnal.polbeng.ac.id/index.php/ISI/article/view/1484"
@@ -4286,7 +4354,11 @@
           "date-time": "2026-05-09T02:39:59Z",
           "timestamp": 1778294399000
         },
+<<<<<<< Updated upstream
         "score": 34.076107,
+=======
+        "score": 34.095,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://academic.oup.com/sleep/article/49/Supplement_1/A153/8673444"
@@ -4495,7 +4567,11 @@
           "date-time": "2026-07-10T18:10:19Z",
           "timestamp": 1783707019000
         },
+<<<<<<< Updated upstream
         "score": 34.04215,
+=======
+        "score": 34.042526,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://www.researchsquare.com/article/rs-10178277/v1"
@@ -4668,7 +4744,11 @@
           "date-time": "2026-06-02T16:06:31Z",
           "timestamp": 1780416391000
         },
+<<<<<<< Updated upstream
         "score": 33.934643,
+=======
+        "score": 33.934685,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://www.researchsquare.com/article/rs-9882260/v1"
@@ -4779,7 +4859,11 @@
           "date-time": "2026-05-16T07:57:01Z",
           "timestamp": 1778918221000
         },
+<<<<<<< Updated upstream
         "score": 33.345715,
+=======
+        "score": 33.346207,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://www.ijraset.com/best-journal/hybrid-graph-neural-network-and-large-language-"
@@ -4914,7 +4998,11 @@
           "date-time": "2026-06-01T07:10:33Z",
           "timestamp": 1780297833000
         },
+<<<<<<< Updated upstream
         "score": 33.18351,
+=======
+        "score": 33.183266,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://tns.ewapub.com/article/view/34055"
@@ -5141,7 +5229,11 @@
           "date-time": "2026-05-06T13:17:58Z",
           "timestamp": 1778073478000
         },
+<<<<<<< Updated upstream
         "score": 33.104332,
+=======
+        "score": 33.10552,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://journals.flvc.org/FLAIRS/article/view/141782"
@@ -5321,7 +5413,11 @@
           "date-time": "2026-05-22T03:59:47Z",
           "timestamp": 1779422387000
         },
+<<<<<<< Updated upstream
         "score": 33.016098,
+=======
+        "score": 33.016724,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://www.researchsquare.com/article/rs-9770645/v1"
@@ -5749,7 +5845,11 @@
           "date-time": "2026-07-16T09:33:41Z",
           "timestamp": 1784194421000
         },
+<<<<<<< Updated upstream
         "score": 32.972603,
+=======
+        "score": 32.992588,
+>>>>>>> Stashed changes
         "resource": {
           "primary": {
             "URL": "https://onlinelibrary.wiley.com/doi/10.1111/exsy.70341"
