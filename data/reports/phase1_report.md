@@ -21,7 +21,10 @@ Dưới đây là kết quả đánh giá hệ thống RAG sử dụng dữ li�
 * **⭐ Điểm trung bình đánh giá (Mean Judge Score):** `4.70 / 5.0`
 
 ### 🔍 Chi tiết đánh giá bổ sung (Ragas Metrics)
-*Set RUN_RAGAS=1 to enable the slower Ragas pass.*
+* **🎯 Độ chính xác ngữ cảnh (Context Precision):** `100.00%`
+* **📚 Độ bao phủ ngữ cảnh (Context Recall):** `100.00%`
+* **🛡️ Tính trung thực (Faithfulness):** `100.00%`
+* **💬 Độ liên quan câu trả lời (Answer Relevancy):** `94.50%`
 
 ## 3. 🛡️ Kiểm định chất lượng dữ liệu (Data Quality Checks)
 Tổng hợp trạng thái kiểm tra chất lượng dữ liệu của DataFrame đã được làm sạch:

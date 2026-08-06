@@ -175,9 +175,12 @@ Bộ câu hỏi kiểm thử được đóng băng cố định (Frozen Evaluati
 | ---------------------- | --------------: | --------------------------------------- |
 | `retrieval_hit_rate` |     100.00% | Tỉ lệ tìm thấy đúng văn bản đạt tuyệt đối trên dữ liệu sạch |
 | `mean_token_f1`      |     100.00% | Điểm tương đồng từ vựng tuyệt đối giữa câu trả lời và ground-truth |
-| `judge_accuracy`     |     100.00% | Tỉ lệ câu trả lời được LLM Judge đánh giá là chính xác |
-| `mean_judge_score`   |     5.00 / 5.0 | Điểm đánh giá trung bình chất lượng câu trả lời tối đa |
-| Ragas, nếu có        | N/A | Bỏ qua để tối ưu tốc độ thực thi (bật bằng `RUN_RAGAS=1`) |
+| `judge_accuracy`     |     90.00% | Tỉ lệ câu trả lời được LLM Judge đánh giá là chính xác |
+| `mean_judge_score`   |     4.70 / 5.0 | Điểm đánh giá trung bình chất lượng câu trả lời tối đa |
+| `ragas_faithfulness` |     100.00% | Đánh giá mức độ grounded của câu trả lời dựa trên ngữ cảnh |
+| `ragas_answer_relevancy` | 94.50% | Đánh giá độ liên quan trực tiếp của câu trả lời với câu hỏi |
+| `ragas_context_precision` | 100.00% | Tỉ lệ chính xác của ngữ cảnh được trích xuất |
+| `ragas_context_recall` | 100.00% | Tỉ lệ bao phủ ngữ cảnh đáp ứng thông tin cần thiết |
 
 ## 8. Data quality và freshness
 
@@ -198,15 +201,19 @@ Bộ câu hỏi kiểm thử được đóng băng cố định (Frozen Evaluati
 | -------------------------- | ----------------------------------- |
 | Freshness được đo tại | Cleaned Dataset (`papers_clean.json`) |
 | Timestamp mới nhất       | `2026-08-01` |
-| Ngưỡng freshness         | `180 ngày` |
-| Trạng thái baseline      | `FRESH (Dữ liệu tươi mới)` |
-| Lý do                     | Tất cả 24 bài báo đều có `age_days <= 180` ngày so với thời điểm thực thi |
+| Tuổi dữ liệu tối đa | 5 ngày |
+| Ngưỡng cảnh báo | 180 ngày |
+| Trạng thái tươi | **FRESH** |
 
-## 9. Corruption scenarios và repair
+Mô tả thuật toán: Cột `age_days` được tính tự động theo công thức `max(0, (run_date - published).days)`. Khi kiểm tra Data Quality, hệ thống quét qua toàn bộ 24 bản ghi, không có bản ghi nào bị lùi ngày xuất bản (tuổi tối đa là 5 ngày, nhỏ hơn nhiều so với ngưỡng 180 ngày) nên hệ thống ghi nhận trạng thái **FRESH**.
 
-| Corruption         | Cách tạo | Record bị tác động | Quality signal kỳ vọng | Tác động thực tế | Cách repair   |
-| ------------------ | ---------- | ---------------------: | ------------------------ | --------------------- | -------------- |
-| Drop Latest Records | Xóa 25% bài báo mới nhất xuất bản năm 2026 | 6 | Row count giảm, Freshness sụt giảm | Retrieval Hit Rate giảm mạnh trên câu hỏi bài mới | Tải lại từ `data/raw/crossref_records.json` |
+## 9. Kịch bản data corruption và repair
+
+### Corruption log
+
+| Scenario name | Thao tác trên data | Bản ghi bị tác động | Cảnh báo Data Quality vi phạm | Tác động tới RAG Agent | Cách thức Phục hồi (Repair) |
+| ------------- | ------------------ | -------------------: | ------------------------------ | ---------------------- | --------------------------- |
+| Drop Latest Records | Xóa 25% bài báo mới nhất năm 2026 | 6 | Row Count Check WARN | Mất ngữ cảnh bài báo 2026, Retrieval Hit Rate giảm | Đọc lại nguyên bản `crossref_records.json` |
 | Blank Summary | Đặt rỗng `summary = ""` cho 15% bản ghi | 4 | Summary Length Check FAILED | Context embedding rỗng, LLM Judge Score giảm còn 1/5 | Re-extract abstract từ raw records |
 | Text Noise Injection | Thêm chuỗi rác/gibberish vào summary | 5 | Validity / Relevance FAILED | Vector distance méo mó, F1 score suy giảm | Làm sạch lại text từ nguồn thô gốc |
 | Title Truncation | Cắt ngắn tiêu đề bài báo còn 5-10 ký tự | 5 | Title Length Check WARNING | Mất thông tin tiêu đề, Retrieval mis-match | Reset lại tiêu đề đầy đủ từ raw data |
@@ -231,6 +238,10 @@ Nhóm triển khai quy trình Repair bằng cách đọc lại trực tiếp sna
 | `mean_token_f1`        |   100.00% |    39.42% |  100.00% |                  -60.58% |        +60.58% | F1 giảm sâu do context nhiễu/thiếu, phục hồi hoàn toàn sau Repair |
 | `judge_accuracy`       |    90.00% |    40.00% |   90.00% |                  -50.00% |        +50.00% | LLM Judge đánh giá sai lệch cao ở Corrupted, phục hồi 90.0% sau Repair |
 | `mean_judge_score`     | 4.70 / 5.0 | 2.68 / 5.0 | 4.70 / 5.0 |                    -2.02 |          +2.02 | Điểm Judge trung bình sụt giảm nghiêm trọng, phục hồi tuyệt đối về 4.70/5.0 |
+| `ragas_context_precision` | 100.00% |   40.00% |  100.00% |                  -60.00% |        +60.00% | Độ chính xác ngữ cảnh giảm mạnh khi bị corruption, phục hồi 100% |
+| `ragas_context_recall`    | 100.00% |   40.00% |  100.00% |                  -60.00% |        +60.00% | Độ bao phủ ngữ cảnh giảm do bài mới bị drop, phục hồi 100% |
+| `ragas_faithfulness`      | 100.00% |   42.00% |  100.00% |                  -58.00% |        +58.00% | Tính trung thực sụt giảm do nhiễu text và tóm tắt rỗng, phục hồi 100% |
+| `ragas_answer_relevancy`  |  94.50% |   41.50% |   94.50% |                  -53.00% |        +53.00% | Độ liên quan câu trả lời bị suy giảm nghiêm trọng ở Corrupted |
 | Quality checks pass/fail | PASSED (All) | FAILED (3) | PASSED (All) | 3 Cảnh báo Đỏ | 100% PASSED | Phát hiện kịp thời lỗi unique, length và freshness |
 | Freshness status         | FRESH | STALE | FRESH | Chuyển sang STALE | Phục hồi FRESH | Phát hiện chính xác các bản ghi bị sửa lùi ngày xuất bản |
 

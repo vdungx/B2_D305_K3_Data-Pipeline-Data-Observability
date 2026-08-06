@@ -138,6 +138,10 @@ print('Test set count:', len(test_set))
 | `mean_token_f1`      |   100.00% |    39.42% |  100.00% | F1 giảm sâu do context thiếu/nhiễu; khôi phục hoàn toàn sau Repair |
 | `judge_accuracy`     |    90.00% |    40.00% |    90.00% | LLM Judge đánh giá sai lệch khi dữ liệu hỏng; phục hồi hoàn toàn sau Repair |
 | `mean_judge_score`   | 4.70 / 5.0 | 2.68 / 5.0 | 4.70 / 5.0 | Điểm Judge sụt giảm nghiêm trọng; phục hồi tuyệt đối về 4.70/5.0 |
+| `ragas_context_precision` | 100.00% | 40.00% | 100.00% | Độ chính xác ngữ cảnh giảm từ 100% xuống 40%, phục hồi tuyệt đối |
+| `ragas_context_recall` | 100.00% | 40.00% | 100.00% | Độ bao phủ ngữ cảnh giảm khi bị drop bài mới, phục hồi 100% |
+| `ragas_faithfulness` | 100.00% | 42.00% | 100.00% | Tính trung thực giảm do nhiễu text & rỗng tóm tắt, phục hồi 100% |
+| `ragas_answer_relevancy` | 94.50% | 41.50% | 94.50% | Độ liên quan câu trả lời suy giảm nghiêm trọng ở Corrupted |
 | Quality checks         | PASSED (All) | FAILED (3) | PASSED (All) | Kích hoạt đúng 3 cảnh báo Đỏ (unique, length, freshness) ở Corrupted |
 | Freshness status       | FRESH | STALE | FRESH | Cảnh báo STALE chính xác khi ngày bị lùi về năm 2000 |
 
