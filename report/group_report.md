@@ -6,9 +6,9 @@
 
 | Thông tin         | Nội dung                  |
 | ------------------ | -------------------------- |
-| Khóa/Lớp         | [K3]              |
-| Tên nhóm         | [B2]     |
-| Repository         | [https://github.com/vdungx/B2_D305_K3_Data-Pipeline-Data-Observability.git] |
+| Khóa/Lớp         | K3              |
+| Tên nhóm         | B2     |
+| Repository         | https://github.com/vdungx/B2_D305_K3_Data-Pipeline-Data-Observability.git |
 | Ngày hoàn thành | [2026-08-06]               |
 
 ### Thành viên và phân công
